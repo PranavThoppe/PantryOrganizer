@@ -1,300 +1,381 @@
-'use client'
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+(() => {
+var exports = {};
+exports.id = "app/page";
+exports.ids = ["app/page"];
+exports.modules = {
 
-import { useState, useEffect, useRef } from 'react';
-import { firestore } from './firebase';
-import { Box, Stack, Typography, Button, ButtonGroup, Popover, TextField } from '@mui/material';
-import {
-  collection,
-  doc,
-  getDocs,
-  query,
-  setDoc,
-  deleteDoc,
-  getDoc,
-} from 'firebase/firestore';
+/***/ "./action-async-storage.external":
+/*!****************************************************************************!*\
+  !*** external "next/dist/client/components/action-async-storage.external" ***!
+  \****************************************************************************/
+/***/ ((module) => {
 
-export default function Home() {
-  const [pantry, setPantry] = useState([]); // State to hold the list of pantry items
-  const [anchorEl, setAnchorEl] = useState(null); // For Add Popover
-  const [updateAnchorEl, setUpdateAnchorEl] = useState(null); // For Update Popover
-  const [itemName, setItemName] = useState(''); // State to hold the name of the item to be added
-  const [selectedItem, setSelectedItem] = useState(null); // State to hold the currently selected item
-  const [newItemName, setNewItemName] = useState(''); // State to hold the new name for updating an item
-  const [searchQuery, setSearchQuery] = useState(''); // State to hold the search query
+"use strict";
+module.exports = require("next/dist/client/components/action-async-storage.external");
 
-  // Create a ref to store item references for scrolling
-  const itemRefs = useRef({});
+/***/ }),
 
-  useEffect(() => {
-    const updatePantry = async () => {
-      const snapshot = query(collection(firestore, 'Pantry'));
-      const docs = await getDocs(snapshot);
-      const pantryList = [];
-      docs.forEach((doc) => {
-        pantryList.push(doc.id);
-      });
-      console.log(pantryList);
-      setPantry(pantryList);
-    };
-    updatePantry();
-  }, []);
+/***/ "../../client/components/action-async-storage.external":
+/*!*******************************************************************************!*\
+  !*** external "next/dist/client/components/action-async-storage.external.js" ***!
+  \*******************************************************************************/
+/***/ ((module) => {
 
-  // Scroll to the selected item when it changes
-  useEffect(() => {
-    if (selectedItem && itemRefs.current[selectedItem]) {
-      itemRefs.current[selectedItem].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }, [selectedItem]);
+"use strict";
+module.exports = require("next/dist/client/components/action-async-storage.external.js");
 
-  // Handle Add button click to open the Add Popover
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+/***/ }),
 
-  // Close the Add Popover
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+/***/ "./request-async-storage.external":
+/*!*****************************************************************************!*\
+  !*** external "next/dist/client/components/request-async-storage.external" ***!
+  \*****************************************************************************/
+/***/ ((module) => {
 
-  // Add a new item to the pantry
-  const addPantryItem = async () => {
-    try {
-      const newItemName = itemName.trim();
-      if (newItemName) {
-        const newItem = {
-          name: newItemName,
-          createdAt: new Date()
-        };
+"use strict";
+module.exports = require("next/dist/client/components/request-async-storage.external");
 
-        const docRef = doc(collection(firestore, 'Pantry'), newItemName);
-        await setDoc(docRef, newItem);
+/***/ }),
 
-        console.log("Document written with ID: ", newItemName);
+/***/ "../../client/components/request-async-storage.external":
+/*!********************************************************************************!*\
+  !*** external "next/dist/client/components/request-async-storage.external.js" ***!
+  \********************************************************************************/
+/***/ ((module) => {
 
-        setPantry([...pantry, newItemName]); // Update the pantry list with the new item
-        setItemName(''); // Clear the input field
-        handleClose(); // Close the popover
-      }
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
+"use strict";
+module.exports = require("next/dist/client/components/request-async-storage.external.js");
 
-  // Delete the selected item from the pantry
-  const deletePantryItem = async () => {
-    try {
-      if (selectedItem) {
-        const docRef = doc(firestore, 'Pantry', selectedItem);
-        await deleteDoc(docRef);
+/***/ }),
 
-        console.log("Document deleted with ID: ", selectedItem);
+/***/ "./static-generation-async-storage.external":
+/*!***************************************************************************************!*\
+  !*** external "next/dist/client/components/static-generation-async-storage.external" ***!
+  \***************************************************************************************/
+/***/ ((module) => {
 
-        setPantry(pantry.filter((item) => item !== selectedItem)); // Update the pantry list
-        setSelectedItem(null); // Clear the selected item
-      }
-    } catch (e) {
-      console.error("Error deleting document: ", e);
-    }
-  };
+"use strict";
+module.exports = require("next/dist/client/components/static-generation-async-storage.external");
 
-  // Handle Update button click to open the Update Popover
-  const handleUpdateClick = (event) => {
-    setUpdateAnchorEl(event.currentTarget);
-    setNewItemName(selectedItem); // Set the current name for updating
-  };
+/***/ }),
 
-  // Close the Update Popover
-  const handleUpdateClose = () => {
-    setUpdateAnchorEl(null);
-  };
+/***/ "../../client/components/static-generation-async-storage.external":
+/*!******************************************************************************************!*\
+  !*** external "next/dist/client/components/static-generation-async-storage.external.js" ***!
+  \******************************************************************************************/
+/***/ ((module) => {
 
-  const updateOpen = Boolean(updateAnchorEl);
-  const updateId = updateOpen ? 'update-popover' : undefined;
+"use strict";
+module.exports = require("next/dist/client/components/static-generation-async-storage.external.js");
 
-  // Update the selected item with a new name
-  const UpdatePantryItem = async () => {
-    try {
-      const trimmedNewItemName = newItemName.trim();
-      if (trimmedNewItemName && selectedItem) {
-        const oldDocRef = doc(firestore, 'Pantry', selectedItem);
-        const newDocRef = doc(firestore, 'Pantry', trimmedNewItemName);
+/***/ }),
 
-        const oldDocSnap = await getDoc(oldDocRef);
-        if (oldDocSnap.exists()) {
-          await setDoc(newDocRef, { ...oldDocSnap.data(), name: trimmedNewItemName });
-          await deleteDoc(oldDocRef);
+/***/ "next/dist/compiled/next-server/app-page.runtime.dev.js":
+/*!*************************************************************************!*\
+  !*** external "next/dist/compiled/next-server/app-page.runtime.dev.js" ***!
+  \*************************************************************************/
+/***/ ((module) => {
 
-          console.log("Document updated with ID: ", trimmedNewItemName);
+"use strict";
+module.exports = require("next/dist/compiled/next-server/app-page.runtime.dev.js");
 
-          setPantry(pantry.map((item) => (item === selectedItem ? trimmedNewItemName : item))); // Update the pantry list
-          setSelectedItem(trimmedNewItemName); // Update the selected item
-          setNewItemName(''); // Clear the input field
-          handleUpdateClose(); // Close the popover
-        }
-      }
-    } catch (e) {
-      console.error("Error updating document: ", e);
-    }
-  };
+/***/ }),
 
-  // Handle search button click to select the item that matches the search query
-  const handleSearch = () => {
-    const trimmedQuery = searchQuery.trim();
-    if (pantry.includes(trimmedQuery)) {
-      setSelectedItem(trimmedQuery); // Set the selected item to the search result
-    } else {
-      setSelectedItem(null); // Clear selection if no match
-    }
-  };
+/***/ "crypto":
+/*!*************************!*\
+  !*** external "crypto" ***!
+  \*************************/
+/***/ ((module) => {
 
-  const crudButtons = [
-    <Button key="Add" onClick={handleClick} style={{ width: '100%', backgroundColor: 'green', border: '5px solid Black', color: 'white' }}>Add</Button>,
-    <Button key="Delete" onClick={deletePantryItem} style={{ width: '100%', backgroundColor: 'red', border: '5px solid Black', color: 'white' }}>Delete</Button>,
-    <Button key="Update" onClick={handleUpdateClick} style={{ width: '100%', backgroundColor: 'gray', border: '5px solid Black', color: 'white' }}>Update</Button>,
-  ];
+"use strict";
+module.exports = require("crypto");
 
-  return (
-    <Box
-      width={'100vw'}
-      height={'100vh'}
-      display={'flex'}
-      justifyContent={"center"}
-      alignItems={"center"}
-      flexDirection={'column'}
-    >
-      {/* Add Popover */}
-      <Popover
-        id="add-popover"
-        open={Boolean(anchorEl)}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Typography sx={{ p: 2 }}>
-          <TextField
-            id="outlined-basic"
-            label="Enter Pantry Item"
-            variant="outlined"
-            value={itemName}
-            onChange={(e) => setItemName(e.target.value)}
-          />
-        </Typography>
-        <Button onClick={addPantryItem}>Add</Button>
-        <Button onClick={handleClose}>Cancel</Button>
-      </Popover>
+/***/ }),
 
-      {/* Update Popover */}
-      <Popover
-        id={updateId}
-        open={updateOpen}
-        anchorEl={updateAnchorEl}
-        onClose={handleUpdateClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Typography sx={{ p: 2 }}>
-          <TextField
-            id="update-item-name"
-            label="Update Pantry Item"
-            variant="outlined"
-            value={newItemName}
-            onChange={(e) => setNewItemName(e.target.value)}
-          />
-        </Typography>
-        <Button onClick={UpdatePantryItem}>Update</Button>
-        <Button onClick={handleUpdateClose}>Cancel</Button>
-      </Popover>
+/***/ "dns":
+/*!**********************!*\
+  !*** external "dns" ***!
+  \**********************/
+/***/ ((module) => {
 
-      <Box
-        width={'800px'}
-        display={'flex'}
-      >
-        <Typography
-          variant="h1"
-          align='center'
-          bgcolor={'beige'}
-          color={"black"}
-          padding={'10px'}
-          borderTop={'5px solid Black'}
-          borderLeft={'5px solid Black'}
-          width={'100%'}
-        >
-          Pantry
-        </Typography>
+"use strict";
+module.exports = require("dns");
 
-        <ButtonGroup orientation="vertical" aria-label="Vertical button group" height='100%' width='100px'>
-          {crudButtons.map((button, index) => (
-            <Box key={index} style={{ flex: 1, display: 'flex', width: '100px' }}>
-              {button}
-            </Box>
-          ))}
-        </ButtonGroup>
-      </Box>
+/***/ }),
 
-      <Stack
-        width={'800px'}
-        maxHeight={'400px'}
-        overflow={'scroll'}
-        spacing={2}
-        border={'5px solid Black'}
-        position={'relative'}
-      >
-        <Box
-          position={'sticky'}
-          zIndex={1}
-          top={0}
-          left={0}
-          bgcolor={'transparent'} // Ensures the TextField box has a background
-          display={'flex'}
-          margin-top={'10px'}
-        >
-          <TextField
-            id="search-item"
-            label="Search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <Button
-            style={{
-              border: '2px solid gray',
-              marginLeft: '10px' // Add some space between the TextField and Button
-            }}
-            onClick={handleSearch}
-          >
-            🔍
-          </Button>
-        </Box>
+/***/ "events":
+/*!*************************!*\
+  !*** external "events" ***!
+  \*************************/
+/***/ ((module) => {
 
-        {/* Render pantry items */}
-        {pantry.map((i) => (
-          <Box
-            key={i}
-            width={'100%'}
-            minHeight={'150px'}
-            display={'flex'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            borderRadius={'8px'}
-            onClick={() => {
-              // Toggle selection
-              setSelectedItem(selectedItem === i ? null : i);
-            }}
-            bgcolor={selectedItem === i ? '#ddffff' : '#f0f0f0'}
-            style={{ cursor: 'pointer' }}
-            padding={'10px'}
-            ref={(el) => (itemRefs.current[i] = el)} // Assign ref to the item element
-          >
-            <Typography variant="h4">
-              {i.charAt(0).toUpperCase() + i.slice(1)}
-            </Typography>
-          </Box>
-        ))}
-      </Stack>
-    </Box>
-  );
-}
+"use strict";
+module.exports = require("events");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "http":
+/*!***********************!*\
+  !*** external "http" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("http");
+
+/***/ }),
+
+/***/ "http2":
+/*!************************!*\
+  !*** external "http2" ***!
+  \************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("http2");
+
+/***/ }),
+
+/***/ "net":
+/*!**********************!*\
+  !*** external "net" ***!
+  \**********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("net");
+
+/***/ }),
+
+/***/ "os":
+/*!*********************!*\
+  !*** external "os" ***!
+  \*********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("os");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("path");
+
+/***/ }),
+
+/***/ "stream":
+/*!*************************!*\
+  !*** external "stream" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("stream");
+
+/***/ }),
+
+/***/ "tls":
+/*!**********************!*\
+  !*** external "tls" ***!
+  \**********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("tls");
+
+/***/ }),
+
+/***/ "url":
+/*!**********************!*\
+  !*** external "url" ***!
+  \**********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("url");
+
+/***/ }),
+
+/***/ "util":
+/*!***********************!*\
+  !*** external "util" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("util");
+
+/***/ }),
+
+/***/ "zlib":
+/*!***********************!*\
+  !*** external "zlib" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("zlib");
+
+/***/ }),
+
+/***/ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fpage&page=%2Fpage&appPaths=%2Fpage&pagePath=private-next-app-dir%2Fpage.js&appDir=C%3A%5CUsers%5Cprvpa%5Cinventory-management-app%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5Cprvpa%5Cinventory-management-app&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fpage&page=%2Fpage&appPaths=%2Fpage&pagePath=private-next-app-dir%2Fpage.js&appDir=C%3A%5CUsers%5Cprvpa%5Cinventory-management-app%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5Cprvpa%5Cinventory-management-app&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D! ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   GlobalError: () => (/* reexport default from dynamic */ next_dist_client_components_error_boundary__WEBPACK_IMPORTED_MODULE_2___default.a),\n/* harmony export */   __next_app__: () => (/* binding */ __next_app__),\n/* harmony export */   originalPathname: () => (/* binding */ originalPathname),\n/* harmony export */   pages: () => (/* binding */ pages),\n/* harmony export */   routeModule: () => (/* binding */ routeModule),\n/* harmony export */   tree: () => (/* binding */ tree)\n/* harmony export */ });\n/* harmony import */ var next_dist_server_future_route_modules_app_page_module_compiled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/server/future/route-modules/app-page/module.compiled */ \"(ssr)/./node_modules/next/dist/server/future/route-modules/app-page/module.compiled.js?d969\");\n/* harmony import */ var next_dist_server_future_route_modules_app_page_module_compiled__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_dist_server_future_route_modules_app_page_module_compiled__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var next_dist_server_future_route_kind__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/dist/server/future/route-kind */ \"(rsc)/./node_modules/next/dist/server/future/route-kind.js\");\n/* harmony import */ var next_dist_client_components_error_boundary__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/dist/client/components/error-boundary */ \"(rsc)/./node_modules/next/dist/client/components/error-boundary.js\");\n/* harmony import */ var next_dist_client_components_error_boundary__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_dist_client_components_error_boundary__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var next_dist_server_app_render_entry_base__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! next/dist/server/app-render/entry-base */ \"(rsc)/./node_modules/next/dist/server/app-render/entry-base.js\");\n/* harmony import */ var next_dist_server_app_render_entry_base__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_dist_server_app_render_entry_base__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};\n/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in next_dist_server_app_render_entry_base__WEBPACK_IMPORTED_MODULE_3__) if([\"default\",\"tree\",\"pages\",\"GlobalError\",\"originalPathname\",\"__next_app__\",\"routeModule\"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => next_dist_server_app_render_entry_base__WEBPACK_IMPORTED_MODULE_3__[__WEBPACK_IMPORT_KEY__]\n/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);\n\"TURBOPACK { transition: next-ssr }\";\n\n\n// We inject the tree and pages here so that we can use them in the route\n// module.\nconst tree = {\n        children: [\n        '',\n        {\n        children: ['__PAGE__', {}, {\n          page: [() => Promise.resolve(/*! import() eager */).then(__webpack_require__.bind(__webpack_require__, /*! ./src/app/page.js */ \"(rsc)/./src/app/page.js\")), \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\"],\n          metadata: {\n    icon: [(async (props) => (await Promise.resolve(/*! import() eager */).then(__webpack_require__.bind(__webpack_require__, /*! next-metadata-image-loader?type=favicon&segment=&basePath=&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!./src/app/favicon.ico?__next_metadata__ */ \"(rsc)/./node_modules/next/dist/build/webpack/loaders/next-metadata-image-loader.js?type=favicon&segment=&basePath=&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!./src/app/favicon.ico?__next_metadata__\"))).default(props))],\n    apple: [],\n    openGraph: [],\n    twitter: [],\n    manifest: undefined\n  }\n        }]\n      },\n        {\n        'layout': [() => Promise.resolve(/*! import() eager */).then(__webpack_require__.bind(__webpack_require__, /*! ./src/app/layout.js */ \"(rsc)/./src/app/layout.js\")), \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\layout.js\"],\n'not-found': [() => Promise.resolve(/*! import() eager */).then(__webpack_require__.t.bind(__webpack_require__, /*! next/dist/client/components/not-found-error */ \"(rsc)/./node_modules/next/dist/client/components/not-found-error.js\", 23)), \"next/dist/client/components/not-found-error\"],\n        metadata: {\n    icon: [(async (props) => (await Promise.resolve(/*! import() eager */).then(__webpack_require__.bind(__webpack_require__, /*! next-metadata-image-loader?type=favicon&segment=&basePath=&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!./src/app/favicon.ico?__next_metadata__ */ \"(rsc)/./node_modules/next/dist/build/webpack/loaders/next-metadata-image-loader.js?type=favicon&segment=&basePath=&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!./src/app/favicon.ico?__next_metadata__\"))).default(props))],\n    apple: [],\n    openGraph: [],\n    twitter: [],\n    manifest: undefined\n  }\n      }\n      ]\n      }.children;\nconst pages = [\"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\"];\n\n\nconst __next_app_require__ = __webpack_require__\nconst __next_app_load_chunk__ = () => Promise.resolve()\nconst originalPathname = \"/page\";\nconst __next_app__ = {\n    require: __next_app_require__,\n    loadChunk: __next_app_load_chunk__\n};\n\n// Create and export the route module that will be consumed.\nconst routeModule = new next_dist_server_future_route_modules_app_page_module_compiled__WEBPACK_IMPORTED_MODULE_0__.AppPageRouteModule({\n    definition: {\n        kind: next_dist_server_future_route_kind__WEBPACK_IMPORTED_MODULE_1__.RouteKind.APP_PAGE,\n        page: \"/page\",\n        pathname: \"/\",\n        // The following aren't used in production.\n        bundlePath: \"\",\n        filename: \"\",\n        appPaths: []\n    },\n    userland: {\n        loaderTree: tree\n    }\n});\n\n//# sourceMappingURL=app-page.js.map//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9ub2RlX21vZHVsZXMvbmV4dC9kaXN0L2J1aWxkL3dlYnBhY2svbG9hZGVycy9uZXh0LWFwcC1sb2FkZXIuanM/bmFtZT1hcHAlMkZwYWdlJnBhZ2U9JTJGcGFnZSZhcHBQYXRocz0lMkZwYWdlJnBhZ2VQYXRoPXByaXZhdGUtbmV4dC1hcHAtZGlyJTJGcGFnZS5qcyZhcHBEaXI9QyUzQSU1Q1VzZXJzJTVDcHJ2cGElNUNpbnZlbnRvcnktbWFuYWdlbWVudC1hcHAlNUNzcmMlNUNhcHAmcGFnZUV4dGVuc2lvbnM9dHN4JnBhZ2VFeHRlbnNpb25zPXRzJnBhZ2VFeHRlbnNpb25zPWpzeCZwYWdlRXh0ZW5zaW9ucz1qcyZyb290RGlyPUMlM0ElNUNVc2VycyU1Q3BydnBhJTVDaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwJmlzRGV2PXRydWUmdHNjb25maWdQYXRoPXRzY29uZmlnLmpzb24mYmFzZVBhdGg9JmFzc2V0UHJlZml4PSZuZXh0Q29uZmlnT3V0cHV0PSZwcmVmZXJyZWRSZWdpb249Jm1pZGRsZXdhcmVDb25maWc9ZTMwJTNEISIsIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsYUFBYSxzQkFBc0I7QUFDaUU7QUFDckM7QUFDL0Q7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsaUNBQWlDO0FBQ2pDLHVCQUF1Qiw4SUFBa0c7QUFDekg7QUFDQSxvQ0FBb0Msc2ZBQTZQO0FBQ2pTO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxTQUFTO0FBQ1QsT0FBTztBQUNQO0FBQ0EseUJBQXlCLGtKQUFvRztBQUM3SCxvQkFBb0IsME5BQWdGO0FBQ3BHO0FBQ0Esb0NBQW9DLHNmQUE2UDtBQUNqUztBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLE9BQU87QUFDUDtBQUN1QjtBQUM2RDtBQUNwRiw2QkFBNkIsbUJBQW1CO0FBQ2hEO0FBQ087QUFDQTtBQUNQO0FBQ0E7QUFDQTtBQUN1RDtBQUN2RDtBQUNPLHdCQUF3Qiw4R0FBa0I7QUFDakQ7QUFDQSxjQUFjLHlFQUFTO0FBQ3ZCO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLEtBQUs7QUFDTDtBQUNBO0FBQ0E7QUFDQSxDQUFDOztBQUVEIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwLz8wODc0Il0sInNvdXJjZXNDb250ZW50IjpbIlwiVFVSQk9QQUNLIHsgdHJhbnNpdGlvbjogbmV4dC1zc3IgfVwiO1xuaW1wb3J0IHsgQXBwUGFnZVJvdXRlTW9kdWxlIH0gZnJvbSBcIm5leHQvZGlzdC9zZXJ2ZXIvZnV0dXJlL3JvdXRlLW1vZHVsZXMvYXBwLXBhZ2UvbW9kdWxlLmNvbXBpbGVkXCI7XG5pbXBvcnQgeyBSb3V0ZUtpbmQgfSBmcm9tIFwibmV4dC9kaXN0L3NlcnZlci9mdXR1cmUvcm91dGUta2luZFwiO1xuLy8gV2UgaW5qZWN0IHRoZSB0cmVlIGFuZCBwYWdlcyBoZXJlIHNvIHRoYXQgd2UgY2FuIHVzZSB0aGVtIGluIHRoZSByb3V0ZVxuLy8gbW9kdWxlLlxuY29uc3QgdHJlZSA9IHtcbiAgICAgICAgY2hpbGRyZW46IFtcbiAgICAgICAgJycsXG4gICAgICAgIHtcbiAgICAgICAgY2hpbGRyZW46IFsnX19QQUdFX18nLCB7fSwge1xuICAgICAgICAgIHBhZ2U6IFsoKSA9PiBpbXBvcnQoLyogd2VicGFja01vZGU6IFwiZWFnZXJcIiAqLyBcIkM6XFxcXFVzZXJzXFxcXHBydnBhXFxcXGludmVudG9yeS1tYW5hZ2VtZW50LWFwcFxcXFxzcmNcXFxcYXBwXFxcXHBhZ2UuanNcIiksIFwiQzpcXFxcVXNlcnNcXFxccHJ2cGFcXFxcaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwXFxcXHNyY1xcXFxhcHBcXFxccGFnZS5qc1wiXSxcbiAgICAgICAgICBtZXRhZGF0YToge1xuICAgIGljb246IFsoYXN5bmMgKHByb3BzKSA9PiAoYXdhaXQgaW1wb3J0KC8qIHdlYnBhY2tNb2RlOiBcImVhZ2VyXCIgKi8gXCJuZXh0LW1ldGFkYXRhLWltYWdlLWxvYWRlcj90eXBlPWZhdmljb24mc2VnbWVudD0mYmFzZVBhdGg9JnBhZ2VFeHRlbnNpb25zPXRzeCZwYWdlRXh0ZW5zaW9ucz10cyZwYWdlRXh0ZW5zaW9ucz1qc3gmcGFnZUV4dGVuc2lvbnM9anMhQzpcXFxcVXNlcnNcXFxccHJ2cGFcXFxcaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwXFxcXHNyY1xcXFxhcHBcXFxcZmF2aWNvbi5pY28/X19uZXh0X21ldGFkYXRhX19cIikpLmRlZmF1bHQocHJvcHMpKV0sXG4gICAgYXBwbGU6IFtdLFxuICAgIG9wZW5HcmFwaDogW10sXG4gICAgdHdpdHRlcjogW10sXG4gICAgbWFuaWZlc3Q6IHVuZGVmaW5lZFxuICB9XG4gICAgICAgIH1dXG4gICAgICB9LFxuICAgICAgICB7XG4gICAgICAgICdsYXlvdXQnOiBbKCkgPT4gaW1wb3J0KC8qIHdlYnBhY2tNb2RlOiBcImVhZ2VyXCIgKi8gXCJDOlxcXFxVc2Vyc1xcXFxwcnZwYVxcXFxpbnZlbnRvcnktbWFuYWdlbWVudC1hcHBcXFxcc3JjXFxcXGFwcFxcXFxsYXlvdXQuanNcIiksIFwiQzpcXFxcVXNlcnNcXFxccHJ2cGFcXFxcaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwXFxcXHNyY1xcXFxhcHBcXFxcbGF5b3V0LmpzXCJdLFxuJ25vdC1mb3VuZCc6IFsoKSA9PiBpbXBvcnQoLyogd2VicGFja01vZGU6IFwiZWFnZXJcIiAqLyBcIm5leHQvZGlzdC9jbGllbnQvY29tcG9uZW50cy9ub3QtZm91bmQtZXJyb3JcIiksIFwibmV4dC9kaXN0L2NsaWVudC9jb21wb25lbnRzL25vdC1mb3VuZC1lcnJvclwiXSxcbiAgICAgICAgbWV0YWRhdGE6IHtcbiAgICBpY29uOiBbKGFzeW5jIChwcm9wcykgPT4gKGF3YWl0IGltcG9ydCgvKiB3ZWJwYWNrTW9kZTogXCJlYWdlclwiICovIFwibmV4dC1tZXRhZGF0YS1pbWFnZS1sb2FkZXI/dHlwZT1mYXZpY29uJnNlZ21lbnQ9JmJhc2VQYXRoPSZwYWdlRXh0ZW5zaW9ucz10c3gmcGFnZUV4dGVuc2lvbnM9dHMmcGFnZUV4dGVuc2lvbnM9anN4JnBhZ2VFeHRlbnNpb25zPWpzIUM6XFxcXFVzZXJzXFxcXHBydnBhXFxcXGludmVudG9yeS1tYW5hZ2VtZW50LWFwcFxcXFxzcmNcXFxcYXBwXFxcXGZhdmljb24uaWNvP19fbmV4dF9tZXRhZGF0YV9fXCIpKS5kZWZhdWx0KHByb3BzKSldLFxuICAgIGFwcGxlOiBbXSxcbiAgICBvcGVuR3JhcGg6IFtdLFxuICAgIHR3aXR0ZXI6IFtdLFxuICAgIG1hbmlmZXN0OiB1bmRlZmluZWRcbiAgfVxuICAgICAgfVxuICAgICAgXVxuICAgICAgfS5jaGlsZHJlbjtcbmNvbnN0IHBhZ2VzID0gW1wiQzpcXFxcVXNlcnNcXFxccHJ2cGFcXFxcaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwXFxcXHNyY1xcXFxhcHBcXFxccGFnZS5qc1wiXTtcbmV4cG9ydCB7IHRyZWUsIHBhZ2VzIH07XG5leHBvcnQgeyBkZWZhdWx0IGFzIEdsb2JhbEVycm9yIH0gZnJvbSBcIm5leHQvZGlzdC9jbGllbnQvY29tcG9uZW50cy9lcnJvci1ib3VuZGFyeVwiO1xuY29uc3QgX19uZXh0X2FwcF9yZXF1aXJlX18gPSBfX3dlYnBhY2tfcmVxdWlyZV9fXG5jb25zdCBfX25leHRfYXBwX2xvYWRfY2h1bmtfXyA9ICgpID0+IFByb21pc2UucmVzb2x2ZSgpXG5leHBvcnQgY29uc3Qgb3JpZ2luYWxQYXRobmFtZSA9IFwiL3BhZ2VcIjtcbmV4cG9ydCBjb25zdCBfX25leHRfYXBwX18gPSB7XG4gICAgcmVxdWlyZTogX19uZXh0X2FwcF9yZXF1aXJlX18sXG4gICAgbG9hZENodW5rOiBfX25leHRfYXBwX2xvYWRfY2h1bmtfX1xufTtcbmV4cG9ydCAqIGZyb20gXCJuZXh0L2Rpc3Qvc2VydmVyL2FwcC1yZW5kZXIvZW50cnktYmFzZVwiO1xuLy8gQ3JlYXRlIGFuZCBleHBvcnQgdGhlIHJvdXRlIG1vZHVsZSB0aGF0IHdpbGwgYmUgY29uc3VtZWQuXG5leHBvcnQgY29uc3Qgcm91dGVNb2R1bGUgPSBuZXcgQXBwUGFnZVJvdXRlTW9kdWxlKHtcbiAgICBkZWZpbml0aW9uOiB7XG4gICAgICAgIGtpbmQ6IFJvdXRlS2luZC5BUFBfUEFHRSxcbiAgICAgICAgcGFnZTogXCIvcGFnZVwiLFxuICAgICAgICBwYXRobmFtZTogXCIvXCIsXG4gICAgICAgIC8vIFRoZSBmb2xsb3dpbmcgYXJlbid0IHVzZWQgaW4gcHJvZHVjdGlvbi5cbiAgICAgICAgYnVuZGxlUGF0aDogXCJcIixcbiAgICAgICAgZmlsZW5hbWU6IFwiXCIsXG4gICAgICAgIGFwcFBhdGhzOiBbXVxuICAgIH0sXG4gICAgdXNlcmxhbmQ6IHtcbiAgICAgICAgbG9hZGVyVHJlZTogdHJlZVxuICAgIH1cbn0pO1xuXG4vLyMgc291cmNlTWFwcGluZ1VSTD1hcHAtcGFnZS5qcy5tYXAiXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fpage&page=%2Fpage&appPaths=%2Fpage&pagePath=private-next-app-dir%2Fpage.js&appDir=C%3A%5CUsers%5Cprvpa%5Cinventory-management-app%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5Cprvpa%5Cinventory-management-app&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!\n");
+
+/***/ }),
+
+/***/ "(ssr)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Capp-router.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Cclient-page.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Cerror-boundary.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Clayout-router.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Cnot-found-boundary.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Crender-from-template-context.js%22%2C%22ids%22%3A%5B%5D%7D&server=true!":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Capp-router.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Cclient-page.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Cerror-boundary.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Clayout-router.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Cnot-found-boundary.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Crender-from-template-context.js%22%2C%22ids%22%3A%5B%5D%7D&server=true! ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("Promise.resolve(/*! import() eager */).then(__webpack_require__.t.bind(__webpack_require__, /*! ./node_modules/next/dist/client/components/app-router.js */ \"(ssr)/./node_modules/next/dist/client/components/app-router.js\", 23));\n;\nPromise.resolve(/*! import() eager */).then(__webpack_require__.t.bind(__webpack_require__, /*! ./node_modules/next/dist/client/components/client-page.js */ \"(ssr)/./node_modules/next/dist/client/components/client-page.js\", 23));\n;\nPromise.resolve(/*! import() eager */).then(__webpack_require__.t.bind(__webpack_require__, /*! ./node_modules/next/dist/client/components/error-boundary.js */ \"(ssr)/./node_modules/next/dist/client/components/error-boundary.js\", 23));\n;\nPromise.resolve(/*! import() eager */).then(__webpack_require__.t.bind(__webpack_require__, /*! ./node_modules/next/dist/client/components/layout-router.js */ \"(ssr)/./node_modules/next/dist/client/components/layout-router.js\", 23));\n;\nPromise.resolve(/*! import() eager */).then(__webpack_require__.t.bind(__webpack_require__, /*! ./node_modules/next/dist/client/components/not-found-boundary.js */ \"(ssr)/./node_modules/next/dist/client/components/not-found-boundary.js\", 23));\n;\nPromise.resolve(/*! import() eager */).then(__webpack_require__.t.bind(__webpack_require__, /*! ./node_modules/next/dist/client/components/render-from-template-context.js */ \"(ssr)/./node_modules/next/dist/client/components/render-from-template-context.js\", 23));\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9ub2RlX21vZHVsZXMvbmV4dC9kaXN0L2J1aWxkL3dlYnBhY2svbG9hZGVycy9uZXh0LWZsaWdodC1jbGllbnQtZW50cnktbG9hZGVyLmpzP21vZHVsZXM9JTdCJTIycmVxdWVzdCUyMiUzQSUyMkMlM0ElNUMlNUNVc2VycyU1QyU1Q3BydnBhJTVDJTVDaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwJTVDJTVDbm9kZV9tb2R1bGVzJTVDJTVDbmV4dCU1QyU1Q2Rpc3QlNUMlNUNjbGllbnQlNUMlNUNjb21wb25lbnRzJTVDJTVDYXBwLXJvdXRlci5qcyUyMiUyQyUyMmlkcyUyMiUzQSU1QiU1RCU3RCZtb2R1bGVzPSU3QiUyMnJlcXVlc3QlMjIlM0ElMjJDJTNBJTVDJTVDVXNlcnMlNUMlNUNwcnZwYSU1QyU1Q2ludmVudG9yeS1tYW5hZ2VtZW50LWFwcCU1QyU1Q25vZGVfbW9kdWxlcyU1QyU1Q25leHQlNUMlNUNkaXN0JTVDJTVDY2xpZW50JTVDJTVDY29tcG9uZW50cyU1QyU1Q2NsaWVudC1wYWdlLmpzJTIyJTJDJTIyaWRzJTIyJTNBJTVCJTVEJTdEJm1vZHVsZXM9JTdCJTIycmVxdWVzdCUyMiUzQSUyMkMlM0ElNUMlNUNVc2VycyU1QyU1Q3BydnBhJTVDJTVDaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwJTVDJTVDbm9kZV9tb2R1bGVzJTVDJTVDbmV4dCU1QyU1Q2Rpc3QlNUMlNUNjbGllbnQlNUMlNUNjb21wb25lbnRzJTVDJTVDZXJyb3ItYm91bmRhcnkuanMlMjIlMkMlMjJpZHMlMjIlM0ElNUIlNUQlN0QmbW9kdWxlcz0lN0IlMjJyZXF1ZXN0JTIyJTNBJTIyQyUzQSU1QyU1Q1VzZXJzJTVDJTVDcHJ2cGElNUMlNUNpbnZlbnRvcnktbWFuYWdlbWVudC1hcHAlNUMlNUNub2RlX21vZHVsZXMlNUMlNUNuZXh0JTVDJTVDZGlzdCU1QyU1Q2NsaWVudCU1QyU1Q2NvbXBvbmVudHMlNUMlNUNsYXlvdXQtcm91dGVyLmpzJTIyJTJDJTIyaWRzJTIyJTNBJTVCJTVEJTdEJm1vZHVsZXM9JTdCJTIycmVxdWVzdCUyMiUzQSUyMkMlM0ElNUMlNUNVc2VycyU1QyU1Q3BydnBhJTVDJTVDaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwJTVDJTVDbm9kZV9tb2R1bGVzJTVDJTVDbmV4dCU1QyU1Q2Rpc3QlNUMlNUNjbGllbnQlNUMlNUNjb21wb25lbnRzJTVDJTVDbm90LWZvdW5kLWJvdW5kYXJ5LmpzJTIyJTJDJTIyaWRzJTIyJTNBJTVCJTVEJTdEJm1vZHVsZXM9JTdCJTIycmVxdWVzdCUyMiUzQSUyMkMlM0ElNUMlNUNVc2VycyU1QyU1Q3BydnBhJTVDJTVDaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwJTVDJTVDbm9kZV9tb2R1bGVzJTVDJTVDbmV4dCU1QyU1Q2Rpc3QlNUMlNUNjbGllbnQlNUMlNUNjb21wb25lbnRzJTVDJTVDcmVuZGVyLWZyb20tdGVtcGxhdGUtY29udGV4dC5qcyUyMiUyQyUyMmlkcyUyMiUzQSU1QiU1RCU3RCZzZXJ2ZXI9dHJ1ZSEiLCJtYXBwaW5ncyI6IkFBQUEsa09BQTRJO0FBQzVJO0FBQ0Esb09BQTZJO0FBQzdJO0FBQ0EsME9BQWdKO0FBQ2hKO0FBQ0Esd09BQStJO0FBQy9JO0FBQ0Esa1BBQW9KO0FBQ3BKO0FBQ0Esc1FBQThKIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwLz84ZGU5Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCgvKiB3ZWJwYWNrTW9kZTogXCJlYWdlclwiICovIFwiQzpcXFxcVXNlcnNcXFxccHJ2cGFcXFxcaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwXFxcXG5vZGVfbW9kdWxlc1xcXFxuZXh0XFxcXGRpc3RcXFxcY2xpZW50XFxcXGNvbXBvbmVudHNcXFxcYXBwLXJvdXRlci5qc1wiKTtcbjtcbmltcG9ydCgvKiB3ZWJwYWNrTW9kZTogXCJlYWdlclwiICovIFwiQzpcXFxcVXNlcnNcXFxccHJ2cGFcXFxcaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwXFxcXG5vZGVfbW9kdWxlc1xcXFxuZXh0XFxcXGRpc3RcXFxcY2xpZW50XFxcXGNvbXBvbmVudHNcXFxcY2xpZW50LXBhZ2UuanNcIik7XG47XG5pbXBvcnQoLyogd2VicGFja01vZGU6IFwiZWFnZXJcIiAqLyBcIkM6XFxcXFVzZXJzXFxcXHBydnBhXFxcXGludmVudG9yeS1tYW5hZ2VtZW50LWFwcFxcXFxub2RlX21vZHVsZXNcXFxcbmV4dFxcXFxkaXN0XFxcXGNsaWVudFxcXFxjb21wb25lbnRzXFxcXGVycm9yLWJvdW5kYXJ5LmpzXCIpO1xuO1xuaW1wb3J0KC8qIHdlYnBhY2tNb2RlOiBcImVhZ2VyXCIgKi8gXCJDOlxcXFxVc2Vyc1xcXFxwcnZwYVxcXFxpbnZlbnRvcnktbWFuYWdlbWVudC1hcHBcXFxcbm9kZV9tb2R1bGVzXFxcXG5leHRcXFxcZGlzdFxcXFxjbGllbnRcXFxcY29tcG9uZW50c1xcXFxsYXlvdXQtcm91dGVyLmpzXCIpO1xuO1xuaW1wb3J0KC8qIHdlYnBhY2tNb2RlOiBcImVhZ2VyXCIgKi8gXCJDOlxcXFxVc2Vyc1xcXFxwcnZwYVxcXFxpbnZlbnRvcnktbWFuYWdlbWVudC1hcHBcXFxcbm9kZV9tb2R1bGVzXFxcXG5leHRcXFxcZGlzdFxcXFxjbGllbnRcXFxcY29tcG9uZW50c1xcXFxub3QtZm91bmQtYm91bmRhcnkuanNcIik7XG47XG5pbXBvcnQoLyogd2VicGFja01vZGU6IFwiZWFnZXJcIiAqLyBcIkM6XFxcXFVzZXJzXFxcXHBydnBhXFxcXGludmVudG9yeS1tYW5hZ2VtZW50LWFwcFxcXFxub2RlX21vZHVsZXNcXFxcbmV4dFxcXFxkaXN0XFxcXGNsaWVudFxcXFxjb21wb25lbnRzXFxcXHJlbmRlci1mcm9tLXRlbXBsYXRlLWNvbnRleHQuanNcIik7XG4iXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(ssr)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Capp-router.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Cclient-page.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Cerror-boundary.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Clayout-router.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Cnot-found-boundary.js%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cdist%5C%5Cclient%5C%5Ccomponents%5C%5Crender-from-template-context.js%22%2C%22ids%22%3A%5B%5D%7D&server=true!\n");
+
+/***/ }),
+
+/***/ "(ssr)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cfont%5C%5Cgoogle%5C%5Ctarget.css%3F%7B%5C%22path%5C%22%3A%5C%22src%5C%5C%5C%5Capp%5C%5C%5C%5Clayout.js%5C%22%2C%5C%22import%5C%22%3A%5C%22Inter%5C%22%2C%5C%22arguments%5C%22%3A%5B%7B%5C%22subsets%5C%22%3A%5B%5C%22latin%5C%22%5D%7D%5D%2C%5C%22variableName%5C%22%3A%5C%22inter%5C%22%7D%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Csrc%5C%5Capp%5C%5Cglobals.css%22%2C%22ids%22%3A%5B%5D%7D&server=true!":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Cnode_modules%5C%5Cnext%5C%5Cfont%5C%5Cgoogle%5C%5Ctarget.css%3F%7B%5C%22path%5C%22%3A%5C%22src%5C%5C%5C%5Capp%5C%5C%5C%5Clayout.js%5C%22%2C%5C%22import%5C%22%3A%5C%22Inter%5C%22%2C%5C%22arguments%5C%22%3A%5B%7B%5C%22subsets%5C%22%3A%5B%5C%22latin%5C%22%5D%7D%5D%2C%5C%22variableName%5C%22%3A%5C%22inter%5C%22%7D%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Csrc%5C%5Capp%5C%5Cglobals.css%22%2C%22ids%22%3A%5B%5D%7D&server=true! ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "(ssr)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Csrc%5C%5Capp%5C%5Cpage.js%22%2C%22ids%22%3A%5B%5D%7D&server=true!":
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Csrc%5C%5Capp%5C%5Cpage.js%22%2C%22ids%22%3A%5B%5D%7D&server=true! ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("Promise.resolve(/*! import() eager */).then(__webpack_require__.bind(__webpack_require__, /*! ./src/app/page.js */ \"(ssr)/./src/app/page.js\"));\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9ub2RlX21vZHVsZXMvbmV4dC9kaXN0L2J1aWxkL3dlYnBhY2svbG9hZGVycy9uZXh0LWZsaWdodC1jbGllbnQtZW50cnktbG9hZGVyLmpzP21vZHVsZXM9JTdCJTIycmVxdWVzdCUyMiUzQSUyMkMlM0ElNUMlNUNVc2VycyU1QyU1Q3BydnBhJTVDJTVDaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwJTVDJTVDc3JjJTVDJTVDYXBwJTVDJTVDcGFnZS5qcyUyMiUyQyUyMmlkcyUyMiUzQSU1QiU1RCU3RCZzZXJ2ZXI9dHJ1ZSEiLCJtYXBwaW5ncyI6IkFBQUEsOElBQWtHIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwLz81OTIyIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCgvKiB3ZWJwYWNrTW9kZTogXCJlYWdlclwiICovIFwiQzpcXFxcVXNlcnNcXFxccHJ2cGFcXFxcaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwXFxcXHNyY1xcXFxhcHBcXFxccGFnZS5qc1wiKTtcbiJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(ssr)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22C%3A%5C%5CUsers%5C%5Cprvpa%5C%5Cinventory-management-app%5C%5Csrc%5C%5Capp%5C%5Cpage.js%22%2C%22ids%22%3A%5B%5D%7D&server=true!\n");
+
+/***/ }),
+
+/***/ "(ssr)/./src/app/firebase.js":
+/*!*****************************!*\
+  !*** ./src/app/firebase.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   app: () => (/* binding */ app),\n/* harmony export */   firestore: () => (/* binding */ firestore)\n/* harmony export */ });\n/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ \"(ssr)/./node_modules/firebase/app/dist/index.mjs\");\n/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/firestore */ \"(ssr)/./node_modules/firebase/firestore/dist/index.mjs\");\n/* __next_internal_client_entry_do_not_use__ app,firestore auto */ \n\nconst firebaseConfig = {\n    apiKey: \"AIzaSyAQnTnLonUO8SDjt9V1Sq24siuzzWA4d8I\",\n    authDomain: \"inventory-management-app-61a4b.firebaseapp.com\",\n    projectId: \"inventory-management-app-61a4b\",\n    storageBucket: \"inventory-management-app-61a4b.appspot.com\",\n    messagingSenderId: \"862203681383\",\n    appId: \"1:862203681383:web:5ea7875fa20e8e262b52c2\",\n    measurementId: \"G-V8XQTPYC9Z\"\n};\nconst app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig);\nconst firestore = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getFirestore)(app);\n\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9zcmMvYXBwL2ZpcmViYXNlLmpzIiwibWFwcGluZ3MiOiI7Ozs7Ozs7bUVBQzZDO0FBQ0s7QUFFbEQsTUFBTUUsaUJBQWlCO0lBQ25CQyxRQUFRO0lBQ1JDLFlBQVk7SUFDWkMsV0FBVztJQUNYQyxlQUFlO0lBQ2ZDLG1CQUFtQjtJQUNuQkMsT0FBTztJQUNQQyxlQUFlO0FBQ2pCO0FBQ0YsTUFBTUMsTUFBTVYsMkRBQWFBLENBQUNFO0FBQzFCLE1BQU1TLFlBQVlWLGdFQUFZQSxDQUFDUztBQUNMIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwLy4vc3JjL2FwcC9maXJlYmFzZS5qcz83MWE2Il0sInNvdXJjZXNDb250ZW50IjpbIid1c2UgY2xpZW50J1xyXG5pbXBvcnQgeyBpbml0aWFsaXplQXBwIH0gZnJvbSAnZmlyZWJhc2UvYXBwJztcclxuaW1wb3J0IHsgZ2V0RmlyZXN0b3JlIH0gZnJvbSAnZmlyZWJhc2UvZmlyZXN0b3JlJztcclxuXHJcbmNvbnN0IGZpcmViYXNlQ29uZmlnID0ge1xyXG4gICAgYXBpS2V5OiBcIkFJemFTeUFRblRuTG9uVU84U0RqdDlWMVNxMjRzaXV6eldBNGQ4SVwiLFxyXG4gICAgYXV0aERvbWFpbjogXCJpbnZlbnRvcnktbWFuYWdlbWVudC1hcHAtNjFhNGIuZmlyZWJhc2VhcHAuY29tXCIsXHJcbiAgICBwcm9qZWN0SWQ6IFwiaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwLTYxYTRiXCIsXHJcbiAgICBzdG9yYWdlQnVja2V0OiBcImludmVudG9yeS1tYW5hZ2VtZW50LWFwcC02MWE0Yi5hcHBzcG90LmNvbVwiLFxyXG4gICAgbWVzc2FnaW5nU2VuZGVySWQ6IFwiODYyMjAzNjgxMzgzXCIsXHJcbiAgICBhcHBJZDogXCIxOjg2MjIwMzY4MTM4Mzp3ZWI6NWVhNzg3NWZhMjBlOGUyNjJiNTJjMlwiLFxyXG4gICAgbWVhc3VyZW1lbnRJZDogXCJHLVY4WFFUUFlDOVpcIlxyXG4gIH07XHJcbmNvbnN0IGFwcCA9IGluaXRpYWxpemVBcHAoZmlyZWJhc2VDb25maWcpO1xyXG5jb25zdCBmaXJlc3RvcmUgPSBnZXRGaXJlc3RvcmUoYXBwKTtcclxuZXhwb3J0IHsgYXBwLCBmaXJlc3RvcmUgfTsiXSwibmFtZXMiOlsiaW5pdGlhbGl6ZUFwcCIsImdldEZpcmVzdG9yZSIsImZpcmViYXNlQ29uZmlnIiwiYXBpS2V5IiwiYXV0aERvbWFpbiIsInByb2plY3RJZCIsInN0b3JhZ2VCdWNrZXQiLCJtZXNzYWdpbmdTZW5kZXJJZCIsImFwcElkIiwibWVhc3VyZW1lbnRJZCIsImFwcCIsImZpcmVzdG9yZSJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(ssr)/./src/app/firebase.js\n");
+
+/***/ }),
+
+/***/ "(ssr)/./src/app/page.js":
+/*!*************************!*\
+  !*** ./src/app/page.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Home)\n/* harmony export */ });\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ \"(ssr)/./node_modules/next/dist/server/future/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js\");\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ \"(ssr)/./node_modules/next/dist/server/future/route-modules/app-page/vendored/ssr/react.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _firebase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./firebase */ \"(ssr)/./src/app/firebase.js\");\n/* harmony import */ var _barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! __barrel_optimize__?names=Box,Button,ButtonGroup,Popover,Stack,TextField,Typography!=!@mui/material */ \"(ssr)/./node_modules/@mui/material/Button/Button.js\");\n/* harmony import */ var _barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! __barrel_optimize__?names=Box,Button,ButtonGroup,Popover,Stack,TextField,Typography!=!@mui/material */ \"(ssr)/./node_modules/@mui/material/Box/Box.js\");\n/* harmony import */ var _barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! __barrel_optimize__?names=Box,Button,ButtonGroup,Popover,Stack,TextField,Typography!=!@mui/material */ \"(ssr)/./node_modules/@mui/material/Popover/Popover.js\");\n/* harmony import */ var _barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! __barrel_optimize__?names=Box,Button,ButtonGroup,Popover,Stack,TextField,Typography!=!@mui/material */ \"(ssr)/./node_modules/@mui/material/Typography/Typography.js\");\n/* harmony import */ var _barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! __barrel_optimize__?names=Box,Button,ButtonGroup,Popover,Stack,TextField,Typography!=!@mui/material */ \"(ssr)/./node_modules/@mui/material/TextField/TextField.js\");\n/* harmony import */ var _barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! __barrel_optimize__?names=Box,Button,ButtonGroup,Popover,Stack,TextField,Typography!=!@mui/material */ \"(ssr)/./node_modules/@mui/material/ButtonGroup/ButtonGroup.js\");\n/* harmony import */ var _barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! __barrel_optimize__?names=Box,Button,ButtonGroup,Popover,Stack,TextField,Typography!=!@mui/material */ \"(ssr)/./node_modules/@mui/material/Stack/Stack.js\");\n/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/firestore */ \"(ssr)/./node_modules/firebase/firestore/dist/index.mjs\");\n/* __next_internal_client_entry_do_not_use__ default auto */ \n\n\n\n\nfunction Home() {\n    const [pantry, setPantry] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]); // State to hold the list of pantry items\n    const [anchorEl, setAnchorEl] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null); // For Add Popover\n    const [updateAnchorEl, setUpdateAnchorEl] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null); // For Update Popover\n    const [itemName, setItemName] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(\"\"); // State to hold the name of the item to be added\n    const [selectedItem, setSelectedItem] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null); // State to hold the currently selected item\n    const [newItemName, setNewItemName] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(\"\"); // State to hold the new name for updating an item\n    const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(\"\"); // State to hold the search query\n    // Create a ref to store item references for scrolling\n    const itemRefs = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)({});\n    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{\n        const updatePantry = async ()=>{\n            const snapshot = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.query)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.collection)(_firebase__WEBPACK_IMPORTED_MODULE_2__.firestore, \"Pantry\"));\n            const docs = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.getDocs)(snapshot);\n            const pantryList = [];\n            docs.forEach((doc)=>{\n                pantryList.push(doc.id);\n            });\n            console.log(pantryList);\n            setPantry(pantryList);\n        };\n        updatePantry();\n    }, []);\n    // Scroll to the selected item when it changes\n    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{\n        if (selectedItem && itemRefs.current[selectedItem]) {\n            itemRefs.current[selectedItem].scrollIntoView({\n                behavior: \"smooth\",\n                block: \"center\"\n            });\n        }\n    }, [\n        selectedItem\n    ]);\n    // Handle Add button click to open the Add Popover\n    const handleClick = (event)=>{\n        setAnchorEl(event.currentTarget);\n    };\n    // Close the Add Popover\n    const handleClose = ()=>{\n        setAnchorEl(null);\n    };\n    // Add a new item to the pantry\n    const addPantryItem = async ()=>{\n        try {\n            const newItemName = itemName.trim();\n            if (newItemName) {\n                const newItem = {\n                    name: newItemName,\n                    createdAt: new Date()\n                };\n                const docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.doc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.collection)(_firebase__WEBPACK_IMPORTED_MODULE_2__.firestore, \"Pantry\"), newItemName);\n                await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.setDoc)(docRef, newItem);\n                console.log(\"Document written with ID: \", newItemName);\n                setPantry([\n                    ...pantry,\n                    newItemName\n                ]); // Update the pantry list with the new item\n                setItemName(\"\"); // Clear the input field\n                handleClose(); // Close the popover\n            }\n        } catch (e) {\n            console.error(\"Error adding document: \", e);\n        }\n    };\n    // Delete the selected item from the pantry\n    const deletePantryItem = async ()=>{\n        try {\n            if (selectedItem) {\n                const docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.doc)(_firebase__WEBPACK_IMPORTED_MODULE_2__.firestore, \"Pantry\", selectedItem);\n                await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.deleteDoc)(docRef);\n                console.log(\"Document deleted with ID: \", selectedItem);\n                setPantry(pantry.filter((item)=>item !== selectedItem)); // Update the pantry list\n                setSelectedItem(null); // Clear the selected item\n            }\n        } catch (e) {\n            console.error(\"Error deleting document: \", e);\n        }\n    };\n    // Handle Update button click to open the Update Popover\n    const handleUpdateClick = (event)=>{\n        setUpdateAnchorEl(event.currentTarget);\n        setNewItemName(selectedItem); // Set the current name for updating\n    };\n    // Close the Update Popover\n    const handleUpdateClose = ()=>{\n        setUpdateAnchorEl(null);\n    };\n    const updateOpen = Boolean(updateAnchorEl);\n    const updateId = updateOpen ? \"update-popover\" : undefined;\n    // Update the selected item with a new name\n    const UpdatePantryItem = async ()=>{\n        try {\n            const trimmedNewItemName = newItemName.trim();\n            if (trimmedNewItemName && selectedItem) {\n                const oldDocRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.doc)(_firebase__WEBPACK_IMPORTED_MODULE_2__.firestore, \"Pantry\", selectedItem);\n                const newDocRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.doc)(_firebase__WEBPACK_IMPORTED_MODULE_2__.firestore, \"Pantry\", trimmedNewItemName);\n                const oldDocSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.getDoc)(oldDocRef);\n                if (oldDocSnap.exists()) {\n                    await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.setDoc)(newDocRef, {\n                        ...oldDocSnap.data(),\n                        name: trimmedNewItemName\n                    });\n                    await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.deleteDoc)(oldDocRef);\n                    console.log(\"Document updated with ID: \", trimmedNewItemName);\n                    setPantry(pantry.map((item)=>item === selectedItem ? trimmedNewItemName : item)); // Update the pantry list\n                    setSelectedItem(trimmedNewItemName); // Update the selected item\n                    setNewItemName(\"\"); // Clear the input field\n                    handleUpdateClose(); // Close the popover\n                }\n            }\n        } catch (e) {\n            console.error(\"Error updating document: \", e);\n        }\n    };\n    // Handle search button click to select the item that matches the search query\n    const handleSearch = ()=>{\n        const trimmedQuery = searchQuery.trim();\n        if (pantry.includes(trimmedQuery)) {\n            setSelectedItem(trimmedQuery); // Set the selected item to the search result\n        } else {\n            setSelectedItem(null); // Clear selection if no match\n        }\n    };\n    const crudButtons = [\n        /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_4__[\"default\"], {\n            onClick: handleClick,\n            style: {\n                width: \"100%\",\n                backgroundColor: \"green\",\n                border: \"5px solid Black\",\n                color: \"white\"\n            },\n            children: \"Add\"\n        }, \"Add\", false, {\n            fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n            lineNumber: 151,\n            columnNumber: 5\n        }, this),\n        /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_4__[\"default\"], {\n            onClick: deletePantryItem,\n            style: {\n                width: \"100%\",\n                backgroundColor: \"red\",\n                border: \"5px solid Black\",\n                color: \"white\"\n            },\n            children: \"Delete\"\n        }, \"Delete\", false, {\n            fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n            lineNumber: 152,\n            columnNumber: 5\n        }, this),\n        /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_4__[\"default\"], {\n            onClick: handleUpdateClick,\n            style: {\n                width: \"100%\",\n                backgroundColor: \"gray\",\n                border: \"5px solid Black\",\n                color: \"white\"\n            },\n            children: \"Update\"\n        }, \"Update\", false, {\n            fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n            lineNumber: 153,\n            columnNumber: 5\n        }, this)\n    ];\n    return /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_5__[\"default\"], {\n        width: \"100vw\",\n        height: \"100vh\",\n        display: \"flex\",\n        justifyContent: \"center\",\n        alignItems: \"center\",\n        flexDirection: \"column\",\n        children: [\n            /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_6__[\"default\"], {\n                id: \"add-popover\",\n                open: Boolean(anchorEl),\n                anchorEl: anchorEl,\n                onClose: handleClose,\n                anchorOrigin: {\n                    vertical: \"bottom\",\n                    horizontal: \"left\"\n                },\n                children: [\n                    /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_7__[\"default\"], {\n                        sx: {\n                            p: 2\n                        },\n                        children: /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_8__[\"default\"], {\n                            id: \"outlined-basic\",\n                            label: \"Enter Pantry Item\",\n                            variant: \"outlined\",\n                            value: itemName,\n                            onChange: (e)=>setItemName(e.target.value)\n                        }, void 0, false, {\n                            fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                            lineNumber: 177,\n                            columnNumber: 11\n                        }, this)\n                    }, void 0, false, {\n                        fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                        lineNumber: 176,\n                        columnNumber: 9\n                    }, this),\n                    /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_4__[\"default\"], {\n                        onClick: addPantryItem,\n                        children: \"Add\"\n                    }, void 0, false, {\n                        fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                        lineNumber: 185,\n                        columnNumber: 9\n                    }, this),\n                    /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_4__[\"default\"], {\n                        onClick: handleClose,\n                        children: \"Cancel\"\n                    }, void 0, false, {\n                        fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                        lineNumber: 186,\n                        columnNumber: 9\n                    }, this)\n                ]\n            }, void 0, true, {\n                fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                lineNumber: 166,\n                columnNumber: 7\n            }, this),\n            /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_6__[\"default\"], {\n                id: updateId,\n                open: updateOpen,\n                anchorEl: updateAnchorEl,\n                onClose: handleUpdateClose,\n                anchorOrigin: {\n                    vertical: \"bottom\",\n                    horizontal: \"left\"\n                },\n                children: [\n                    /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_7__[\"default\"], {\n                        sx: {\n                            p: 2\n                        },\n                        children: /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_8__[\"default\"], {\n                            id: \"update-item-name\",\n                            label: \"Update Pantry Item\",\n                            variant: \"outlined\",\n                            value: newItemName,\n                            onChange: (e)=>setNewItemName(e.target.value)\n                        }, void 0, false, {\n                            fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                            lineNumber: 201,\n                            columnNumber: 11\n                        }, this)\n                    }, void 0, false, {\n                        fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                        lineNumber: 200,\n                        columnNumber: 9\n                    }, this),\n                    /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_4__[\"default\"], {\n                        onClick: UpdatePantryItem,\n                        children: \"Update\"\n                    }, void 0, false, {\n                        fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                        lineNumber: 209,\n                        columnNumber: 9\n                    }, this),\n                    /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_4__[\"default\"], {\n                        onClick: handleUpdateClose,\n                        children: \"Cancel\"\n                    }, void 0, false, {\n                        fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                        lineNumber: 210,\n                        columnNumber: 9\n                    }, this)\n                ]\n            }, void 0, true, {\n                fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                lineNumber: 190,\n                columnNumber: 7\n            }, this),\n            /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_5__[\"default\"], {\n                width: \"800px\",\n                display: \"flex\",\n                children: [\n                    /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_7__[\"default\"], {\n                        variant: \"h1\",\n                        align: \"center\",\n                        bgcolor: \"beige\",\n                        color: \"black\",\n                        padding: \"10px\",\n                        borderTop: \"5px solid Black\",\n                        borderLeft: \"5px solid Black\",\n                        width: \"100%\",\n                        children: \"Pantry\"\n                    }, void 0, false, {\n                        fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                        lineNumber: 217,\n                        columnNumber: 9\n                    }, this),\n                    /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_9__[\"default\"], {\n                        orientation: \"vertical\",\n                        \"aria-label\": \"Vertical button group\",\n                        height: \"100%\",\n                        width: \"100px\",\n                        children: crudButtons.map((button, index)=>/*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_5__[\"default\"], {\n                                style: {\n                                    flex: 1,\n                                    display: \"flex\",\n                                    width: \"100px\"\n                                },\n                                children: button\n                            }, index, false, {\n                                fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                                lineNumber: 232,\n                                columnNumber: 13\n                            }, this))\n                    }, void 0, false, {\n                        fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                        lineNumber: 230,\n                        columnNumber: 9\n                    }, this)\n                ]\n            }, void 0, true, {\n                fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                lineNumber: 213,\n                columnNumber: 7\n            }, this),\n            /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_10__[\"default\"], {\n                width: \"800px\",\n                maxHeight: \"400px\",\n                overflow: \"scroll\",\n                spacing: 2,\n                border: \"5px solid Black\",\n                position: \"relative\",\n                children: [\n                    /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_5__[\"default\"], {\n                        position: \"sticky\",\n                        zIndex: 1,\n                        top: 0,\n                        left: 0,\n                        bgcolor: \"transparent\",\n                        display: \"flex\",\n                        \"margin-top\": \"10px\",\n                        children: [\n                            /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_8__[\"default\"], {\n                                id: \"search-item\",\n                                label: \"Search\",\n                                value: searchQuery,\n                                onChange: (e)=>setSearchQuery(e.target.value)\n                            }, void 0, false, {\n                                fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                                lineNumber: 256,\n                                columnNumber: 11\n                            }, this),\n                            /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_4__[\"default\"], {\n                                style: {\n                                    border: \"2px solid gray\",\n                                    marginLeft: \"10px\" // Add some space between the TextField and Button\n                                },\n                                onClick: handleSearch,\n                                children: \"\\uD83D\\uDD0D\"\n                            }, void 0, false, {\n                                fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                                lineNumber: 262,\n                                columnNumber: 11\n                            }, this)\n                        ]\n                    }, void 0, true, {\n                        fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                        lineNumber: 247,\n                        columnNumber: 9\n                    }, this),\n                    pantry.map((i)=>/*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_5__[\"default\"], {\n                            width: \"100%\",\n                            minHeight: \"150px\",\n                            display: \"flex\",\n                            justifyContent: \"center\",\n                            alignItems: \"center\",\n                            borderRadius: \"8px\",\n                            onClick: ()=>{\n                                // Toggle selection\n                                setSelectedItem(selectedItem === i ? null : i);\n                            },\n                            bgcolor: selectedItem === i ? \"#ddffff\" : \"#f0f0f0\",\n                            style: {\n                                cursor: \"pointer\"\n                            },\n                            padding: \"10px\",\n                            ref: (el)=>itemRefs.current[i] = el,\n                            children: /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_barrel_optimize_names_Box_Button_ButtonGroup_Popover_Stack_TextField_Typography_mui_material__WEBPACK_IMPORTED_MODULE_7__[\"default\"], {\n                                variant: \"h4\",\n                                children: i.charAt(0).toUpperCase() + i.slice(1)\n                            }, void 0, false, {\n                                fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                                lineNumber: 292,\n                                columnNumber: 13\n                            }, this)\n                        }, i, false, {\n                            fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                            lineNumber: 275,\n                            columnNumber: 11\n                        }, this))\n                ]\n            }, void 0, true, {\n                fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n                lineNumber: 239,\n                columnNumber: 7\n            }, this)\n        ]\n    }, void 0, true, {\n        fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\page.js\",\n        lineNumber: 157,\n        columnNumber: 5\n    }, this);\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9zcmMvYXBwL3BhZ2UuanMiLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBRW9EO0FBQ2I7QUFDeUQ7QUFTcEU7QUFFYixTQUFTa0I7SUFDdEIsTUFBTSxDQUFDQyxRQUFRQyxVQUFVLEdBQUdwQiwrQ0FBUUEsQ0FBQyxFQUFFLEdBQUcseUNBQXlDO0lBQ25GLE1BQU0sQ0FBQ3FCLFVBQVVDLFlBQVksR0FBR3RCLCtDQUFRQSxDQUFDLE9BQU8sa0JBQWtCO0lBQ2xFLE1BQU0sQ0FBQ3VCLGdCQUFnQkMsa0JBQWtCLEdBQUd4QiwrQ0FBUUEsQ0FBQyxPQUFPLHFCQUFxQjtJQUNqRixNQUFNLENBQUN5QixVQUFVQyxZQUFZLEdBQUcxQiwrQ0FBUUEsQ0FBQyxLQUFLLGlEQUFpRDtJQUMvRixNQUFNLENBQUMyQixjQUFjQyxnQkFBZ0IsR0FBRzVCLCtDQUFRQSxDQUFDLE9BQU8sNENBQTRDO0lBQ3BHLE1BQU0sQ0FBQzZCLGFBQWFDLGVBQWUsR0FBRzlCLCtDQUFRQSxDQUFDLEtBQUssa0RBQWtEO0lBQ3RHLE1BQU0sQ0FBQytCLGFBQWFDLGVBQWUsR0FBR2hDLCtDQUFRQSxDQUFDLEtBQUssaUNBQWlDO0lBRXJGLHNEQUFzRDtJQUN0RCxNQUFNaUMsV0FBVy9CLDZDQUFNQSxDQUFDLENBQUM7SUFFekJELGdEQUFTQSxDQUFDO1FBQ1IsTUFBTWlDLGVBQWU7WUFDbkIsTUFBTUMsV0FBV3JCLHlEQUFLQSxDQUFDSCw4REFBVUEsQ0FBQ1IsZ0RBQVNBLEVBQUU7WUFDN0MsTUFBTWlDLE9BQU8sTUFBTXZCLDJEQUFPQSxDQUFDc0I7WUFDM0IsTUFBTUUsYUFBYSxFQUFFO1lBQ3JCRCxLQUFLRSxPQUFPLENBQUMsQ0FBQzFCO2dCQUNaeUIsV0FBV0UsSUFBSSxDQUFDM0IsSUFBSTRCLEVBQUU7WUFDeEI7WUFDQUMsUUFBUUMsR0FBRyxDQUFDTDtZQUNaakIsVUFBVWlCO1FBQ1o7UUFDQUg7SUFDRixHQUFHLEVBQUU7SUFFTCw4Q0FBOEM7SUFDOUNqQyxnREFBU0EsQ0FBQztRQUNSLElBQUkwQixnQkFBZ0JNLFNBQVNVLE9BQU8sQ0FBQ2hCLGFBQWEsRUFBRTtZQUNsRE0sU0FBU1UsT0FBTyxDQUFDaEIsYUFBYSxDQUFDaUIsY0FBYyxDQUFDO2dCQUFFQyxVQUFVO2dCQUFVQyxPQUFPO1lBQVM7UUFDdEY7SUFDRixHQUFHO1FBQUNuQjtLQUFhO0lBRWpCLGtEQUFrRDtJQUNsRCxNQUFNb0IsY0FBYyxDQUFDQztRQUNuQjFCLFlBQVkwQixNQUFNQyxhQUFhO0lBQ2pDO0lBRUEsd0JBQXdCO0lBQ3hCLE1BQU1DLGNBQWM7UUFDbEI1QixZQUFZO0lBQ2Q7SUFFQSwrQkFBK0I7SUFDL0IsTUFBTTZCLGdCQUFnQjtRQUNwQixJQUFJO1lBQ0YsTUFBTXRCLGNBQWNKLFNBQVMyQixJQUFJO1lBQ2pDLElBQUl2QixhQUFhO2dCQUNmLE1BQU13QixVQUFVO29CQUNkQyxNQUFNekI7b0JBQ04wQixXQUFXLElBQUlDO2dCQUNqQjtnQkFFQSxNQUFNQyxTQUFTN0MsdURBQUdBLENBQUNELDhEQUFVQSxDQUFDUixnREFBU0EsRUFBRSxXQUFXMEI7Z0JBQ3BELE1BQU1kLDBEQUFNQSxDQUFDMEMsUUFBUUo7Z0JBRXJCWixRQUFRQyxHQUFHLENBQUMsOEJBQThCYjtnQkFFMUNULFVBQVU7dUJBQUlEO29CQUFRVTtpQkFBWSxHQUFHLDJDQUEyQztnQkFDaEZILFlBQVksS0FBSyx3QkFBd0I7Z0JBQ3pDd0IsZUFBZSxvQkFBb0I7WUFDckM7UUFDRixFQUFFLE9BQU9RLEdBQUc7WUFDVmpCLFFBQVFrQixLQUFLLENBQUMsMkJBQTJCRDtRQUMzQztJQUNGO0lBRUEsMkNBQTJDO0lBQzNDLE1BQU1FLG1CQUFtQjtRQUN2QixJQUFJO1lBQ0YsSUFBSWpDLGNBQWM7Z0JBQ2hCLE1BQU04QixTQUFTN0MsdURBQUdBLENBQUNULGdEQUFTQSxFQUFFLFVBQVV3QjtnQkFDeEMsTUFBTVgsNkRBQVNBLENBQUN5QztnQkFFaEJoQixRQUFRQyxHQUFHLENBQUMsOEJBQThCZjtnQkFFMUNQLFVBQVVELE9BQU8wQyxNQUFNLENBQUMsQ0FBQ0MsT0FBU0EsU0FBU25DLGdCQUFnQix5QkFBeUI7Z0JBQ3BGQyxnQkFBZ0IsT0FBTywwQkFBMEI7WUFDbkQ7UUFDRixFQUFFLE9BQU84QixHQUFHO1lBQ1ZqQixRQUFRa0IsS0FBSyxDQUFDLDZCQUE2QkQ7UUFDN0M7SUFDRjtJQUVBLHdEQUF3RDtJQUN4RCxNQUFNSyxvQkFBb0IsQ0FBQ2Y7UUFDekJ4QixrQkFBa0J3QixNQUFNQyxhQUFhO1FBQ3JDbkIsZUFBZUgsZUFBZSxvQ0FBb0M7SUFDcEU7SUFFQSwyQkFBMkI7SUFDM0IsTUFBTXFDLG9CQUFvQjtRQUN4QnhDLGtCQUFrQjtJQUNwQjtJQUVBLE1BQU15QyxhQUFhQyxRQUFRM0M7SUFDM0IsTUFBTTRDLFdBQVdGLGFBQWEsbUJBQW1CRztJQUVqRCwyQ0FBMkM7SUFDM0MsTUFBTUMsbUJBQW1CO1FBQ3ZCLElBQUk7WUFDRixNQUFNQyxxQkFBcUJ6QyxZQUFZdUIsSUFBSTtZQUMzQyxJQUFJa0Isc0JBQXNCM0MsY0FBYztnQkFDdEMsTUFBTTRDLFlBQVkzRCx1REFBR0EsQ0FBQ1QsZ0RBQVNBLEVBQUUsVUFBVXdCO2dCQUMzQyxNQUFNNkMsWUFBWTVELHVEQUFHQSxDQUFDVCxnREFBU0EsRUFBRSxVQUFVbUU7Z0JBRTNDLE1BQU1HLGFBQWEsTUFBTXhELDBEQUFNQSxDQUFDc0Q7Z0JBQ2hDLElBQUlFLFdBQVdDLE1BQU0sSUFBSTtvQkFDdkIsTUFBTTNELDBEQUFNQSxDQUFDeUQsV0FBVzt3QkFBRSxHQUFHQyxXQUFXRSxJQUFJLEVBQUU7d0JBQUVyQixNQUFNZ0I7b0JBQW1CO29CQUN6RSxNQUFNdEQsNkRBQVNBLENBQUN1RDtvQkFFaEI5QixRQUFRQyxHQUFHLENBQUMsOEJBQThCNEI7b0JBRTFDbEQsVUFBVUQsT0FBT3lELEdBQUcsQ0FBQyxDQUFDZCxPQUFVQSxTQUFTbkMsZUFBZTJDLHFCQUFxQlIsUUFBUyx5QkFBeUI7b0JBQy9HbEMsZ0JBQWdCMEMscUJBQXFCLDJCQUEyQjtvQkFDaEV4QyxlQUFlLEtBQUssd0JBQXdCO29CQUM1Q2tDLHFCQUFxQixvQkFBb0I7Z0JBQzNDO1lBQ0Y7UUFDRixFQUFFLE9BQU9OLEdBQUc7WUFDVmpCLFFBQVFrQixLQUFLLENBQUMsNkJBQTZCRDtRQUM3QztJQUNGO0lBRUEsOEVBQThFO0lBQzlFLE1BQU1tQixlQUFlO1FBQ25CLE1BQU1DLGVBQWUvQyxZQUFZcUIsSUFBSTtRQUNyQyxJQUFJakMsT0FBTzRELFFBQVEsQ0FBQ0QsZUFBZTtZQUNqQ2xELGdCQUFnQmtELGVBQWUsNkNBQTZDO1FBQzlFLE9BQU87WUFDTGxELGdCQUFnQixPQUFPLDhCQUE4QjtRQUN2RDtJQUNGO0lBRUEsTUFBTW9ELGNBQWM7c0JBQ2xCLDhEQUFDekUscUlBQU1BO1lBQVcwRSxTQUFTbEM7WUFBYW1DLE9BQU87Z0JBQUVDLE9BQU87Z0JBQVFDLGlCQUFpQjtnQkFBU0MsUUFBUTtnQkFBbUJDLE9BQU87WUFBUTtzQkFBRztXQUEzSDs7Ozs7c0JBQ1osOERBQUMvRSxxSUFBTUE7WUFBYzBFLFNBQVNyQjtZQUFrQnNCLE9BQU87Z0JBQUVDLE9BQU87Z0JBQVFDLGlCQUFpQjtnQkFBT0MsUUFBUTtnQkFBbUJDLE9BQU87WUFBUTtzQkFBRztXQUFqSTs7Ozs7c0JBQ1osOERBQUMvRSxxSUFBTUE7WUFBYzBFLFNBQVNsQjtZQUFtQm1CLE9BQU87Z0JBQUVDLE9BQU87Z0JBQVFDLGlCQUFpQjtnQkFBUUMsUUFBUTtnQkFBbUJDLE9BQU87WUFBUTtzQkFBRztXQUFuSTs7Ozs7S0FDYjtJQUVELHFCQUNFLDhEQUFDbEYscUlBQUdBO1FBQ0YrRSxPQUFPO1FBQ1BJLFFBQVE7UUFDUkMsU0FBUztRQUNUQyxnQkFBZ0I7UUFDaEJDLFlBQVk7UUFDWkMsZUFBZTs7MEJBR2YsOERBQUNsRixxSUFBT0E7Z0JBQ04rQixJQUFHO2dCQUNIb0QsTUFBTTFCLFFBQVE3QztnQkFDZEEsVUFBVUE7Z0JBQ1Z3RSxTQUFTM0M7Z0JBQ1Q0QyxjQUFjO29CQUNaQyxVQUFVO29CQUNWQyxZQUFZO2dCQUNkOztrQ0FFQSw4REFBQzFGLHFJQUFVQTt3QkFBQzJGLElBQUk7NEJBQUVDLEdBQUc7d0JBQUU7a0NBQ3JCLDRFQUFDeEYscUlBQVNBOzRCQUNSOEIsSUFBRzs0QkFDSDJELE9BQU07NEJBQ05DLFNBQVE7NEJBQ1JDLE9BQU81RTs0QkFDUDZFLFVBQVUsQ0FBQzVDLElBQU1oQyxZQUFZZ0MsRUFBRTZDLE1BQU0sQ0FBQ0YsS0FBSzs7Ozs7Ozs7Ozs7a0NBRy9DLDhEQUFDOUYscUlBQU1BO3dCQUFDMEUsU0FBUzlCO2tDQUFlOzs7Ozs7a0NBQ2hDLDhEQUFDNUMscUlBQU1BO3dCQUFDMEUsU0FBUy9CO2tDQUFhOzs7Ozs7Ozs7Ozs7MEJBSWhDLDhEQUFDekMscUlBQU9BO2dCQUNOK0IsSUFBSTJCO2dCQUNKeUIsTUFBTTNCO2dCQUNONUMsVUFBVUU7Z0JBQ1ZzRSxTQUFTN0I7Z0JBQ1Q4QixjQUFjO29CQUNaQyxVQUFVO29CQUNWQyxZQUFZO2dCQUNkOztrQ0FFQSw4REFBQzFGLHFJQUFVQTt3QkFBQzJGLElBQUk7NEJBQUVDLEdBQUc7d0JBQUU7a0NBQ3JCLDRFQUFDeEYscUlBQVNBOzRCQUNSOEIsSUFBRzs0QkFDSDJELE9BQU07NEJBQ05DLFNBQVE7NEJBQ1JDLE9BQU94RTs0QkFDUHlFLFVBQVUsQ0FBQzVDLElBQU01QixlQUFlNEIsRUFBRTZDLE1BQU0sQ0FBQ0YsS0FBSzs7Ozs7Ozs7Ozs7a0NBR2xELDhEQUFDOUYscUlBQU1BO3dCQUFDMEUsU0FBU1o7a0NBQWtCOzs7Ozs7a0NBQ25DLDhEQUFDOUQscUlBQU1BO3dCQUFDMEUsU0FBU2pCO2tDQUFtQjs7Ozs7Ozs7Ozs7OzBCQUd0Qyw4REFBQzVELHFJQUFHQTtnQkFDRitFLE9BQU87Z0JBQ1BLLFNBQVM7O2tDQUVULDhEQUFDbEYscUlBQVVBO3dCQUNUOEYsU0FBUTt3QkFDUkksT0FBTTt3QkFDTkMsU0FBUzt3QkFDVG5CLE9BQU87d0JBQ1BvQixTQUFTO3dCQUNUQyxXQUFXO3dCQUNYQyxZQUFZO3dCQUNaekIsT0FBTztrQ0FDUjs7Ozs7O2tDQUlELDhEQUFDM0UscUlBQVdBO3dCQUFDcUcsYUFBWTt3QkFBV0MsY0FBVzt3QkFBd0J2QixRQUFPO3dCQUFPSixPQUFNO2tDQUN4RkgsWUFBWUosR0FBRyxDQUFDLENBQUNtQyxRQUFRQyxzQkFDeEIsOERBQUM1RyxxSUFBR0E7Z0NBQWE4RSxPQUFPO29DQUFFK0IsTUFBTTtvQ0FBR3pCLFNBQVM7b0NBQVFMLE9BQU87Z0NBQVE7MENBQ2hFNEI7K0JBRE9DOzs7Ozs7Ozs7Ozs7Ozs7OzBCQU9oQiw4REFBQzNHLHNJQUFLQTtnQkFDSjhFLE9BQU87Z0JBQ1ArQixXQUFXO2dCQUNYQyxVQUFVO2dCQUNWQyxTQUFTO2dCQUNUL0IsUUFBUTtnQkFDUmdDLFVBQVU7O2tDQUVWLDhEQUFDakgscUlBQUdBO3dCQUNGaUgsVUFBVTt3QkFDVkMsUUFBUTt3QkFDUkMsS0FBSzt3QkFDTEMsTUFBTTt3QkFDTmYsU0FBUzt3QkFDVGpCLFNBQVM7d0JBQ1RpQyxjQUFZOzswQ0FFWiw4REFBQy9HLHFJQUFTQTtnQ0FDUjhCLElBQUc7Z0NBQ0gyRCxPQUFNO2dDQUNORSxPQUFPdEU7Z0NBQ1B1RSxVQUFVLENBQUM1QyxJQUFNMUIsZUFBZTBCLEVBQUU2QyxNQUFNLENBQUNGLEtBQUs7Ozs7OzswQ0FFaEQsOERBQUM5RixxSUFBTUE7Z0NBQ0wyRSxPQUFPO29DQUNMRyxRQUFRO29DQUNScUMsWUFBWSxPQUFPLGtEQUFrRDtnQ0FDdkU7Z0NBQ0F6QyxTQUFTSjswQ0FDVjs7Ozs7Ozs7Ozs7O29CQU1GMUQsT0FBT3lELEdBQUcsQ0FBQyxDQUFDK0Msa0JBQ1gsOERBQUN2SCxxSUFBR0E7NEJBRUYrRSxPQUFPOzRCQUNQeUMsV0FBVzs0QkFDWHBDLFNBQVM7NEJBQ1RDLGdCQUFnQjs0QkFDaEJDLFlBQVk7NEJBQ1ptQyxjQUFjOzRCQUNkNUMsU0FBUztnQ0FDUCxtQkFBbUI7Z0NBQ25CckQsZ0JBQWdCRCxpQkFBaUJnRyxJQUFJLE9BQU9BOzRCQUM5Qzs0QkFDQWxCLFNBQVM5RSxpQkFBaUJnRyxJQUFJLFlBQVk7NEJBQzFDekMsT0FBTztnQ0FBRTRDLFFBQVE7NEJBQVU7NEJBQzNCcEIsU0FBUzs0QkFDVHFCLEtBQUssQ0FBQ0MsS0FBUS9GLFNBQVNVLE9BQU8sQ0FBQ2dGLEVBQUUsR0FBR0s7c0NBRXBDLDRFQUFDMUgscUlBQVVBO2dDQUFDOEYsU0FBUTswQ0FDakJ1QixFQUFFTSxNQUFNLENBQUMsR0FBR0MsV0FBVyxLQUFLUCxFQUFFUSxLQUFLLENBQUM7Ozs7OzsyQkFqQmxDUjs7Ozs7Ozs7Ozs7Ozs7Ozs7QUF3QmpCIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwLy4vc3JjL2FwcC9wYWdlLmpzPzJiM2QiXSwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBjbGllbnQnXG5cbmltcG9ydCB7IHVzZVN0YXRlLCB1c2VFZmZlY3QsIHVzZVJlZiB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCB7IGZpcmVzdG9yZSB9IGZyb20gJy4vZmlyZWJhc2UnO1xuaW1wb3J0IHsgQm94LCBTdGFjaywgVHlwb2dyYXBoeSwgQnV0dG9uLCBCdXR0b25Hcm91cCwgUG9wb3ZlciwgVGV4dEZpZWxkIH0gZnJvbSAnQG11aS9tYXRlcmlhbCc7XG5pbXBvcnQge1xuICBjb2xsZWN0aW9uLFxuICBkb2MsXG4gIGdldERvY3MsXG4gIHF1ZXJ5LFxuICBzZXREb2MsXG4gIGRlbGV0ZURvYyxcbiAgZ2V0RG9jLFxufSBmcm9tICdmaXJlYmFzZS9maXJlc3RvcmUnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBIb21lKCkge1xuICBjb25zdCBbcGFudHJ5LCBzZXRQYW50cnldID0gdXNlU3RhdGUoW10pOyAvLyBTdGF0ZSB0byBob2xkIHRoZSBsaXN0IG9mIHBhbnRyeSBpdGVtc1xuICBjb25zdCBbYW5jaG9yRWwsIHNldEFuY2hvckVsXSA9IHVzZVN0YXRlKG51bGwpOyAvLyBGb3IgQWRkIFBvcG92ZXJcbiAgY29uc3QgW3VwZGF0ZUFuY2hvckVsLCBzZXRVcGRhdGVBbmNob3JFbF0gPSB1c2VTdGF0ZShudWxsKTsgLy8gRm9yIFVwZGF0ZSBQb3BvdmVyXG4gIGNvbnN0IFtpdGVtTmFtZSwgc2V0SXRlbU5hbWVdID0gdXNlU3RhdGUoJycpOyAvLyBTdGF0ZSB0byBob2xkIHRoZSBuYW1lIG9mIHRoZSBpdGVtIHRvIGJlIGFkZGVkXG4gIGNvbnN0IFtzZWxlY3RlZEl0ZW0sIHNldFNlbGVjdGVkSXRlbV0gPSB1c2VTdGF0ZShudWxsKTsgLy8gU3RhdGUgdG8gaG9sZCB0aGUgY3VycmVudGx5IHNlbGVjdGVkIGl0ZW1cbiAgY29uc3QgW25ld0l0ZW1OYW1lLCBzZXROZXdJdGVtTmFtZV0gPSB1c2VTdGF0ZSgnJyk7IC8vIFN0YXRlIHRvIGhvbGQgdGhlIG5ldyBuYW1lIGZvciB1cGRhdGluZyBhbiBpdGVtXG4gIGNvbnN0IFtzZWFyY2hRdWVyeSwgc2V0U2VhcmNoUXVlcnldID0gdXNlU3RhdGUoJycpOyAvLyBTdGF0ZSB0byBob2xkIHRoZSBzZWFyY2ggcXVlcnlcblxuICAvLyBDcmVhdGUgYSByZWYgdG8gc3RvcmUgaXRlbSByZWZlcmVuY2VzIGZvciBzY3JvbGxpbmdcbiAgY29uc3QgaXRlbVJlZnMgPSB1c2VSZWYoe30pO1xuXG4gIHVzZUVmZmVjdCgoKSA9PiB7XG4gICAgY29uc3QgdXBkYXRlUGFudHJ5ID0gYXN5bmMgKCkgPT4ge1xuICAgICAgY29uc3Qgc25hcHNob3QgPSBxdWVyeShjb2xsZWN0aW9uKGZpcmVzdG9yZSwgJ1BhbnRyeScpKTtcbiAgICAgIGNvbnN0IGRvY3MgPSBhd2FpdCBnZXREb2NzKHNuYXBzaG90KTtcbiAgICAgIGNvbnN0IHBhbnRyeUxpc3QgPSBbXTtcbiAgICAgIGRvY3MuZm9yRWFjaCgoZG9jKSA9PiB7XG4gICAgICAgIHBhbnRyeUxpc3QucHVzaChkb2MuaWQpO1xuICAgICAgfSk7XG4gICAgICBjb25zb2xlLmxvZyhwYW50cnlMaXN0KTtcbiAgICAgIHNldFBhbnRyeShwYW50cnlMaXN0KTtcbiAgICB9O1xuICAgIHVwZGF0ZVBhbnRyeSgpO1xuICB9LCBbXSk7XG5cbiAgLy8gU2Nyb2xsIHRvIHRoZSBzZWxlY3RlZCBpdGVtIHdoZW4gaXQgY2hhbmdlc1xuICB1c2VFZmZlY3QoKCkgPT4ge1xuICAgIGlmIChzZWxlY3RlZEl0ZW0gJiYgaXRlbVJlZnMuY3VycmVudFtzZWxlY3RlZEl0ZW1dKSB7XG4gICAgICBpdGVtUmVmcy5jdXJyZW50W3NlbGVjdGVkSXRlbV0uc2Nyb2xsSW50b1ZpZXcoeyBiZWhhdmlvcjogJ3Ntb290aCcsIGJsb2NrOiAnY2VudGVyJyB9KTtcbiAgICB9XG4gIH0sIFtzZWxlY3RlZEl0ZW1dKTtcblxuICAvLyBIYW5kbGUgQWRkIGJ1dHRvbiBjbGljayB0byBvcGVuIHRoZSBBZGQgUG9wb3ZlclxuICBjb25zdCBoYW5kbGVDbGljayA9IChldmVudCkgPT4ge1xuICAgIHNldEFuY2hvckVsKGV2ZW50LmN1cnJlbnRUYXJnZXQpO1xuICB9O1xuXG4gIC8vIENsb3NlIHRoZSBBZGQgUG9wb3ZlclxuICBjb25zdCBoYW5kbGVDbG9zZSA9ICgpID0+IHtcbiAgICBzZXRBbmNob3JFbChudWxsKTtcbiAgfTtcblxuICAvLyBBZGQgYSBuZXcgaXRlbSB0byB0aGUgcGFudHJ5XG4gIGNvbnN0IGFkZFBhbnRyeUl0ZW0gPSBhc3luYyAoKSA9PiB7XG4gICAgdHJ5IHtcbiAgICAgIGNvbnN0IG5ld0l0ZW1OYW1lID0gaXRlbU5hbWUudHJpbSgpO1xuICAgICAgaWYgKG5ld0l0ZW1OYW1lKSB7XG4gICAgICAgIGNvbnN0IG5ld0l0ZW0gPSB7XG4gICAgICAgICAgbmFtZTogbmV3SXRlbU5hbWUsXG4gICAgICAgICAgY3JlYXRlZEF0OiBuZXcgRGF0ZSgpXG4gICAgICAgIH07XG5cbiAgICAgICAgY29uc3QgZG9jUmVmID0gZG9jKGNvbGxlY3Rpb24oZmlyZXN0b3JlLCAnUGFudHJ5JyksIG5ld0l0ZW1OYW1lKTtcbiAgICAgICAgYXdhaXQgc2V0RG9jKGRvY1JlZiwgbmV3SXRlbSk7XG5cbiAgICAgICAgY29uc29sZS5sb2coXCJEb2N1bWVudCB3cml0dGVuIHdpdGggSUQ6IFwiLCBuZXdJdGVtTmFtZSk7XG5cbiAgICAgICAgc2V0UGFudHJ5KFsuLi5wYW50cnksIG5ld0l0ZW1OYW1lXSk7IC8vIFVwZGF0ZSB0aGUgcGFudHJ5IGxpc3Qgd2l0aCB0aGUgbmV3IGl0ZW1cbiAgICAgICAgc2V0SXRlbU5hbWUoJycpOyAvLyBDbGVhciB0aGUgaW5wdXQgZmllbGRcbiAgICAgICAgaGFuZGxlQ2xvc2UoKTsgLy8gQ2xvc2UgdGhlIHBvcG92ZXJcbiAgICAgIH1cbiAgICB9IGNhdGNoIChlKSB7XG4gICAgICBjb25zb2xlLmVycm9yKFwiRXJyb3IgYWRkaW5nIGRvY3VtZW50OiBcIiwgZSk7XG4gICAgfVxuICB9O1xuXG4gIC8vIERlbGV0ZSB0aGUgc2VsZWN0ZWQgaXRlbSBmcm9tIHRoZSBwYW50cnlcbiAgY29uc3QgZGVsZXRlUGFudHJ5SXRlbSA9IGFzeW5jICgpID0+IHtcbiAgICB0cnkge1xuICAgICAgaWYgKHNlbGVjdGVkSXRlbSkge1xuICAgICAgICBjb25zdCBkb2NSZWYgPSBkb2MoZmlyZXN0b3JlLCAnUGFudHJ5Jywgc2VsZWN0ZWRJdGVtKTtcbiAgICAgICAgYXdhaXQgZGVsZXRlRG9jKGRvY1JlZik7XG5cbiAgICAgICAgY29uc29sZS5sb2coXCJEb2N1bWVudCBkZWxldGVkIHdpdGggSUQ6IFwiLCBzZWxlY3RlZEl0ZW0pO1xuXG4gICAgICAgIHNldFBhbnRyeShwYW50cnkuZmlsdGVyKChpdGVtKSA9PiBpdGVtICE9PSBzZWxlY3RlZEl0ZW0pKTsgLy8gVXBkYXRlIHRoZSBwYW50cnkgbGlzdFxuICAgICAgICBzZXRTZWxlY3RlZEl0ZW0obnVsbCk7IC8vIENsZWFyIHRoZSBzZWxlY3RlZCBpdGVtXG4gICAgICB9XG4gICAgfSBjYXRjaCAoZSkge1xuICAgICAgY29uc29sZS5lcnJvcihcIkVycm9yIGRlbGV0aW5nIGRvY3VtZW50OiBcIiwgZSk7XG4gICAgfVxuICB9O1xuXG4gIC8vIEhhbmRsZSBVcGRhdGUgYnV0dG9uIGNsaWNrIHRvIG9wZW4gdGhlIFVwZGF0ZSBQb3BvdmVyXG4gIGNvbnN0IGhhbmRsZVVwZGF0ZUNsaWNrID0gKGV2ZW50KSA9PiB7XG4gICAgc2V0VXBkYXRlQW5jaG9yRWwoZXZlbnQuY3VycmVudFRhcmdldCk7XG4gICAgc2V0TmV3SXRlbU5hbWUoc2VsZWN0ZWRJdGVtKTsgLy8gU2V0IHRoZSBjdXJyZW50IG5hbWUgZm9yIHVwZGF0aW5nXG4gIH07XG5cbiAgLy8gQ2xvc2UgdGhlIFVwZGF0ZSBQb3BvdmVyXG4gIGNvbnN0IGhhbmRsZVVwZGF0ZUNsb3NlID0gKCkgPT4ge1xuICAgIHNldFVwZGF0ZUFuY2hvckVsKG51bGwpO1xuICB9O1xuXG4gIGNvbnN0IHVwZGF0ZU9wZW4gPSBCb29sZWFuKHVwZGF0ZUFuY2hvckVsKTtcbiAgY29uc3QgdXBkYXRlSWQgPSB1cGRhdGVPcGVuID8gJ3VwZGF0ZS1wb3BvdmVyJyA6IHVuZGVmaW5lZDtcblxuICAvLyBVcGRhdGUgdGhlIHNlbGVjdGVkIGl0ZW0gd2l0aCBhIG5ldyBuYW1lXG4gIGNvbnN0IFVwZGF0ZVBhbnRyeUl0ZW0gPSBhc3luYyAoKSA9PiB7XG4gICAgdHJ5IHtcbiAgICAgIGNvbnN0IHRyaW1tZWROZXdJdGVtTmFtZSA9IG5ld0l0ZW1OYW1lLnRyaW0oKTtcbiAgICAgIGlmICh0cmltbWVkTmV3SXRlbU5hbWUgJiYgc2VsZWN0ZWRJdGVtKSB7XG4gICAgICAgIGNvbnN0IG9sZERvY1JlZiA9IGRvYyhmaXJlc3RvcmUsICdQYW50cnknLCBzZWxlY3RlZEl0ZW0pO1xuICAgICAgICBjb25zdCBuZXdEb2NSZWYgPSBkb2MoZmlyZXN0b3JlLCAnUGFudHJ5JywgdHJpbW1lZE5ld0l0ZW1OYW1lKTtcblxuICAgICAgICBjb25zdCBvbGREb2NTbmFwID0gYXdhaXQgZ2V0RG9jKG9sZERvY1JlZik7XG4gICAgICAgIGlmIChvbGREb2NTbmFwLmV4aXN0cygpKSB7XG4gICAgICAgICAgYXdhaXQgc2V0RG9jKG5ld0RvY1JlZiwgeyAuLi5vbGREb2NTbmFwLmRhdGEoKSwgbmFtZTogdHJpbW1lZE5ld0l0ZW1OYW1lIH0pO1xuICAgICAgICAgIGF3YWl0IGRlbGV0ZURvYyhvbGREb2NSZWYpO1xuXG4gICAgICAgICAgY29uc29sZS5sb2coXCJEb2N1bWVudCB1cGRhdGVkIHdpdGggSUQ6IFwiLCB0cmltbWVkTmV3SXRlbU5hbWUpO1xuXG4gICAgICAgICAgc2V0UGFudHJ5KHBhbnRyeS5tYXAoKGl0ZW0pID0+IChpdGVtID09PSBzZWxlY3RlZEl0ZW0gPyB0cmltbWVkTmV3SXRlbU5hbWUgOiBpdGVtKSkpOyAvLyBVcGRhdGUgdGhlIHBhbnRyeSBsaXN0XG4gICAgICAgICAgc2V0U2VsZWN0ZWRJdGVtKHRyaW1tZWROZXdJdGVtTmFtZSk7IC8vIFVwZGF0ZSB0aGUgc2VsZWN0ZWQgaXRlbVxuICAgICAgICAgIHNldE5ld0l0ZW1OYW1lKCcnKTsgLy8gQ2xlYXIgdGhlIGlucHV0IGZpZWxkXG4gICAgICAgICAgaGFuZGxlVXBkYXRlQ2xvc2UoKTsgLy8gQ2xvc2UgdGhlIHBvcG92ZXJcbiAgICAgICAgfVxuICAgICAgfVxuICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgIGNvbnNvbGUuZXJyb3IoXCJFcnJvciB1cGRhdGluZyBkb2N1bWVudDogXCIsIGUpO1xuICAgIH1cbiAgfTtcblxuICAvLyBIYW5kbGUgc2VhcmNoIGJ1dHRvbiBjbGljayB0byBzZWxlY3QgdGhlIGl0ZW0gdGhhdCBtYXRjaGVzIHRoZSBzZWFyY2ggcXVlcnlcbiAgY29uc3QgaGFuZGxlU2VhcmNoID0gKCkgPT4ge1xuICAgIGNvbnN0IHRyaW1tZWRRdWVyeSA9IHNlYXJjaFF1ZXJ5LnRyaW0oKTtcbiAgICBpZiAocGFudHJ5LmluY2x1ZGVzKHRyaW1tZWRRdWVyeSkpIHtcbiAgICAgIHNldFNlbGVjdGVkSXRlbSh0cmltbWVkUXVlcnkpOyAvLyBTZXQgdGhlIHNlbGVjdGVkIGl0ZW0gdG8gdGhlIHNlYXJjaCByZXN1bHRcbiAgICB9IGVsc2Uge1xuICAgICAgc2V0U2VsZWN0ZWRJdGVtKG51bGwpOyAvLyBDbGVhciBzZWxlY3Rpb24gaWYgbm8gbWF0Y2hcbiAgICB9XG4gIH07XG5cbiAgY29uc3QgY3J1ZEJ1dHRvbnMgPSBbXG4gICAgPEJ1dHRvbiBrZXk9XCJBZGRcIiBvbkNsaWNrPXtoYW5kbGVDbGlja30gc3R5bGU9e3sgd2lkdGg6ICcxMDAlJywgYmFja2dyb3VuZENvbG9yOiAnZ3JlZW4nLCBib3JkZXI6ICc1cHggc29saWQgQmxhY2snLCBjb2xvcjogJ3doaXRlJyB9fT5BZGQ8L0J1dHRvbj4sXG4gICAgPEJ1dHRvbiBrZXk9XCJEZWxldGVcIiBvbkNsaWNrPXtkZWxldGVQYW50cnlJdGVtfSBzdHlsZT17eyB3aWR0aDogJzEwMCUnLCBiYWNrZ3JvdW5kQ29sb3I6ICdyZWQnLCBib3JkZXI6ICc1cHggc29saWQgQmxhY2snLCBjb2xvcjogJ3doaXRlJyB9fT5EZWxldGU8L0J1dHRvbj4sXG4gICAgPEJ1dHRvbiBrZXk9XCJVcGRhdGVcIiBvbkNsaWNrPXtoYW5kbGVVcGRhdGVDbGlja30gc3R5bGU9e3sgd2lkdGg6ICcxMDAlJywgYmFja2dyb3VuZENvbG9yOiAnZ3JheScsIGJvcmRlcjogJzVweCBzb2xpZCBCbGFjaycsIGNvbG9yOiAnd2hpdGUnIH19PlVwZGF0ZTwvQnV0dG9uPixcbiAgXTtcblxuICByZXR1cm4gKFxuICAgIDxCb3hcbiAgICAgIHdpZHRoPXsnMTAwdncnfVxuICAgICAgaGVpZ2h0PXsnMTAwdmgnfVxuICAgICAgZGlzcGxheT17J2ZsZXgnfVxuICAgICAganVzdGlmeUNvbnRlbnQ9e1wiY2VudGVyXCJ9XG4gICAgICBhbGlnbkl0ZW1zPXtcImNlbnRlclwifVxuICAgICAgZmxleERpcmVjdGlvbj17J2NvbHVtbid9XG4gICAgPlxuICAgICAgey8qIEFkZCBQb3BvdmVyICovfVxuICAgICAgPFBvcG92ZXJcbiAgICAgICAgaWQ9XCJhZGQtcG9wb3ZlclwiXG4gICAgICAgIG9wZW49e0Jvb2xlYW4oYW5jaG9yRWwpfVxuICAgICAgICBhbmNob3JFbD17YW5jaG9yRWx9XG4gICAgICAgIG9uQ2xvc2U9e2hhbmRsZUNsb3NlfVxuICAgICAgICBhbmNob3JPcmlnaW49e3tcbiAgICAgICAgICB2ZXJ0aWNhbDogJ2JvdHRvbScsXG4gICAgICAgICAgaG9yaXpvbnRhbDogJ2xlZnQnLFxuICAgICAgICB9fVxuICAgICAgPlxuICAgICAgICA8VHlwb2dyYXBoeSBzeD17eyBwOiAyIH19PlxuICAgICAgICAgIDxUZXh0RmllbGRcbiAgICAgICAgICAgIGlkPVwib3V0bGluZWQtYmFzaWNcIlxuICAgICAgICAgICAgbGFiZWw9XCJFbnRlciBQYW50cnkgSXRlbVwiXG4gICAgICAgICAgICB2YXJpYW50PVwib3V0bGluZWRcIlxuICAgICAgICAgICAgdmFsdWU9e2l0ZW1OYW1lfVxuICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRJdGVtTmFtZShlLnRhcmdldC52YWx1ZSl9XG4gICAgICAgICAgLz5cbiAgICAgICAgPC9UeXBvZ3JhcGh5PlxuICAgICAgICA8QnV0dG9uIG9uQ2xpY2s9e2FkZFBhbnRyeUl0ZW19PkFkZDwvQnV0dG9uPlxuICAgICAgICA8QnV0dG9uIG9uQ2xpY2s9e2hhbmRsZUNsb3NlfT5DYW5jZWw8L0J1dHRvbj5cbiAgICAgIDwvUG9wb3Zlcj5cblxuICAgICAgey8qIFVwZGF0ZSBQb3BvdmVyICovfVxuICAgICAgPFBvcG92ZXJcbiAgICAgICAgaWQ9e3VwZGF0ZUlkfVxuICAgICAgICBvcGVuPXt1cGRhdGVPcGVufVxuICAgICAgICBhbmNob3JFbD17dXBkYXRlQW5jaG9yRWx9XG4gICAgICAgIG9uQ2xvc2U9e2hhbmRsZVVwZGF0ZUNsb3NlfVxuICAgICAgICBhbmNob3JPcmlnaW49e3tcbiAgICAgICAgICB2ZXJ0aWNhbDogJ2JvdHRvbScsXG4gICAgICAgICAgaG9yaXpvbnRhbDogJ2xlZnQnLFxuICAgICAgICB9fVxuICAgICAgPlxuICAgICAgICA8VHlwb2dyYXBoeSBzeD17eyBwOiAyIH19PlxuICAgICAgICAgIDxUZXh0RmllbGRcbiAgICAgICAgICAgIGlkPVwidXBkYXRlLWl0ZW0tbmFtZVwiXG4gICAgICAgICAgICBsYWJlbD1cIlVwZGF0ZSBQYW50cnkgSXRlbVwiXG4gICAgICAgICAgICB2YXJpYW50PVwib3V0bGluZWRcIlxuICAgICAgICAgICAgdmFsdWU9e25ld0l0ZW1OYW1lfVxuICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXROZXdJdGVtTmFtZShlLnRhcmdldC52YWx1ZSl9XG4gICAgICAgICAgLz5cbiAgICAgICAgPC9UeXBvZ3JhcGh5PlxuICAgICAgICA8QnV0dG9uIG9uQ2xpY2s9e1VwZGF0ZVBhbnRyeUl0ZW19PlVwZGF0ZTwvQnV0dG9uPlxuICAgICAgICA8QnV0dG9uIG9uQ2xpY2s9e2hhbmRsZVVwZGF0ZUNsb3NlfT5DYW5jZWw8L0J1dHRvbj5cbiAgICAgIDwvUG9wb3Zlcj5cblxuICAgICAgPEJveFxuICAgICAgICB3aWR0aD17JzgwMHB4J31cbiAgICAgICAgZGlzcGxheT17J2ZsZXgnfVxuICAgICAgPlxuICAgICAgICA8VHlwb2dyYXBoeVxuICAgICAgICAgIHZhcmlhbnQ9XCJoMVwiXG4gICAgICAgICAgYWxpZ249J2NlbnRlcidcbiAgICAgICAgICBiZ2NvbG9yPXsnYmVpZ2UnfVxuICAgICAgICAgIGNvbG9yPXtcImJsYWNrXCJ9XG4gICAgICAgICAgcGFkZGluZz17JzEwcHgnfVxuICAgICAgICAgIGJvcmRlclRvcD17JzVweCBzb2xpZCBCbGFjayd9XG4gICAgICAgICAgYm9yZGVyTGVmdD17JzVweCBzb2xpZCBCbGFjayd9XG4gICAgICAgICAgd2lkdGg9eycxMDAlJ31cbiAgICAgICAgPlxuICAgICAgICAgIFBhbnRyeVxuICAgICAgICA8L1R5cG9ncmFwaHk+XG5cbiAgICAgICAgPEJ1dHRvbkdyb3VwIG9yaWVudGF0aW9uPVwidmVydGljYWxcIiBhcmlhLWxhYmVsPVwiVmVydGljYWwgYnV0dG9uIGdyb3VwXCIgaGVpZ2h0PScxMDAlJyB3aWR0aD0nMTAwcHgnPlxuICAgICAgICAgIHtjcnVkQnV0dG9ucy5tYXAoKGJ1dHRvbiwgaW5kZXgpID0+IChcbiAgICAgICAgICAgIDxCb3gga2V5PXtpbmRleH0gc3R5bGU9e3sgZmxleDogMSwgZGlzcGxheTogJ2ZsZXgnLCB3aWR0aDogJzEwMHB4JyB9fT5cbiAgICAgICAgICAgICAge2J1dHRvbn1cbiAgICAgICAgICAgIDwvQm94PlxuICAgICAgICAgICkpfVxuICAgICAgICA8L0J1dHRvbkdyb3VwPlxuICAgICAgPC9Cb3g+XG5cbiAgICAgIDxTdGFja1xuICAgICAgICB3aWR0aD17JzgwMHB4J31cbiAgICAgICAgbWF4SGVpZ2h0PXsnNDAwcHgnfVxuICAgICAgICBvdmVyZmxvdz17J3Njcm9sbCd9XG4gICAgICAgIHNwYWNpbmc9ezJ9XG4gICAgICAgIGJvcmRlcj17JzVweCBzb2xpZCBCbGFjayd9XG4gICAgICAgIHBvc2l0aW9uPXsncmVsYXRpdmUnfVxuICAgICAgPlxuICAgICAgICA8Qm94XG4gICAgICAgICAgcG9zaXRpb249eydzdGlja3knfVxuICAgICAgICAgIHpJbmRleD17MX1cbiAgICAgICAgICB0b3A9ezB9XG4gICAgICAgICAgbGVmdD17MH1cbiAgICAgICAgICBiZ2NvbG9yPXsndHJhbnNwYXJlbnQnfSAvLyBFbnN1cmVzIHRoZSBUZXh0RmllbGQgYm94IGhhcyBhIGJhY2tncm91bmRcbiAgICAgICAgICBkaXNwbGF5PXsnZmxleCd9XG4gICAgICAgICAgbWFyZ2luLXRvcD17JzEwcHgnfVxuICAgICAgICA+XG4gICAgICAgICAgPFRleHRGaWVsZFxuICAgICAgICAgICAgaWQ9XCJzZWFyY2gtaXRlbVwiXG4gICAgICAgICAgICBsYWJlbD1cIlNlYXJjaFwiXG4gICAgICAgICAgICB2YWx1ZT17c2VhcmNoUXVlcnl9XG4gICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldFNlYXJjaFF1ZXJ5KGUudGFyZ2V0LnZhbHVlKX1cbiAgICAgICAgICAvPlxuICAgICAgICAgIDxCdXR0b25cbiAgICAgICAgICAgIHN0eWxlPXt7XG4gICAgICAgICAgICAgIGJvcmRlcjogJzJweCBzb2xpZCBncmF5JyxcbiAgICAgICAgICAgICAgbWFyZ2luTGVmdDogJzEwcHgnIC8vIEFkZCBzb21lIHNwYWNlIGJldHdlZW4gdGhlIFRleHRGaWVsZCBhbmQgQnV0dG9uXG4gICAgICAgICAgICB9fVxuICAgICAgICAgICAgb25DbGljaz17aGFuZGxlU2VhcmNofVxuICAgICAgICAgID5cbiAgICAgICAgICAgIPCflI1cbiAgICAgICAgICA8L0J1dHRvbj5cbiAgICAgICAgPC9Cb3g+XG5cbiAgICAgICAgey8qIFJlbmRlciBwYW50cnkgaXRlbXMgKi99XG4gICAgICAgIHtwYW50cnkubWFwKChpKSA9PiAoXG4gICAgICAgICAgPEJveFxuICAgICAgICAgICAga2V5PXtpfVxuICAgICAgICAgICAgd2lkdGg9eycxMDAlJ31cbiAgICAgICAgICAgIG1pbkhlaWdodD17JzE1MHB4J31cbiAgICAgICAgICAgIGRpc3BsYXk9eydmbGV4J31cbiAgICAgICAgICAgIGp1c3RpZnlDb250ZW50PXsnY2VudGVyJ31cbiAgICAgICAgICAgIGFsaWduSXRlbXM9eydjZW50ZXInfVxuICAgICAgICAgICAgYm9yZGVyUmFkaXVzPXsnOHB4J31cbiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHtcbiAgICAgICAgICAgICAgLy8gVG9nZ2xlIHNlbGVjdGlvblxuICAgICAgICAgICAgICBzZXRTZWxlY3RlZEl0ZW0oc2VsZWN0ZWRJdGVtID09PSBpID8gbnVsbCA6IGkpO1xuICAgICAgICAgICAgfX1cbiAgICAgICAgICAgIGJnY29sb3I9e3NlbGVjdGVkSXRlbSA9PT0gaSA/ICcjZGRmZmZmJyA6ICcjZjBmMGYwJ31cbiAgICAgICAgICAgIHN0eWxlPXt7IGN1cnNvcjogJ3BvaW50ZXInIH19XG4gICAgICAgICAgICBwYWRkaW5nPXsnMTBweCd9XG4gICAgICAgICAgICByZWY9eyhlbCkgPT4gKGl0ZW1SZWZzLmN1cnJlbnRbaV0gPSBlbCl9IC8vIEFzc2lnbiByZWYgdG8gdGhlIGl0ZW0gZWxlbWVudFxuICAgICAgICAgID5cbiAgICAgICAgICAgIDxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJoNFwiPlxuICAgICAgICAgICAgICB7aS5jaGFyQXQoMCkudG9VcHBlckNhc2UoKSArIGkuc2xpY2UoMSl9XG4gICAgICAgICAgICA8L1R5cG9ncmFwaHk+XG4gICAgICAgICAgPC9Cb3g+XG4gICAgICAgICkpfVxuICAgICAgPC9TdGFjaz5cbiAgICA8L0JveD5cbiAgKTtcbn1cbiJdLCJuYW1lcyI6WyJ1c2VTdGF0ZSIsInVzZUVmZmVjdCIsInVzZVJlZiIsImZpcmVzdG9yZSIsIkJveCIsIlN0YWNrIiwiVHlwb2dyYXBoeSIsIkJ1dHRvbiIsIkJ1dHRvbkdyb3VwIiwiUG9wb3ZlciIsIlRleHRGaWVsZCIsImNvbGxlY3Rpb24iLCJkb2MiLCJnZXREb2NzIiwicXVlcnkiLCJzZXREb2MiLCJkZWxldGVEb2MiLCJnZXREb2MiLCJIb21lIiwicGFudHJ5Iiwic2V0UGFudHJ5IiwiYW5jaG9yRWwiLCJzZXRBbmNob3JFbCIsInVwZGF0ZUFuY2hvckVsIiwic2V0VXBkYXRlQW5jaG9yRWwiLCJpdGVtTmFtZSIsInNldEl0ZW1OYW1lIiwic2VsZWN0ZWRJdGVtIiwic2V0U2VsZWN0ZWRJdGVtIiwibmV3SXRlbU5hbWUiLCJzZXROZXdJdGVtTmFtZSIsInNlYXJjaFF1ZXJ5Iiwic2V0U2VhcmNoUXVlcnkiLCJpdGVtUmVmcyIsInVwZGF0ZVBhbnRyeSIsInNuYXBzaG90IiwiZG9jcyIsInBhbnRyeUxpc3QiLCJmb3JFYWNoIiwicHVzaCIsImlkIiwiY29uc29sZSIsImxvZyIsImN1cnJlbnQiLCJzY3JvbGxJbnRvVmlldyIsImJlaGF2aW9yIiwiYmxvY2siLCJoYW5kbGVDbGljayIsImV2ZW50IiwiY3VycmVudFRhcmdldCIsImhhbmRsZUNsb3NlIiwiYWRkUGFudHJ5SXRlbSIsInRyaW0iLCJuZXdJdGVtIiwibmFtZSIsImNyZWF0ZWRBdCIsIkRhdGUiLCJkb2NSZWYiLCJlIiwiZXJyb3IiLCJkZWxldGVQYW50cnlJdGVtIiwiZmlsdGVyIiwiaXRlbSIsImhhbmRsZVVwZGF0ZUNsaWNrIiwiaGFuZGxlVXBkYXRlQ2xvc2UiLCJ1cGRhdGVPcGVuIiwiQm9vbGVhbiIsInVwZGF0ZUlkIiwidW5kZWZpbmVkIiwiVXBkYXRlUGFudHJ5SXRlbSIsInRyaW1tZWROZXdJdGVtTmFtZSIsIm9sZERvY1JlZiIsIm5ld0RvY1JlZiIsIm9sZERvY1NuYXAiLCJleGlzdHMiLCJkYXRhIiwibWFwIiwiaGFuZGxlU2VhcmNoIiwidHJpbW1lZFF1ZXJ5IiwiaW5jbHVkZXMiLCJjcnVkQnV0dG9ucyIsIm9uQ2xpY2siLCJzdHlsZSIsIndpZHRoIiwiYmFja2dyb3VuZENvbG9yIiwiYm9yZGVyIiwiY29sb3IiLCJoZWlnaHQiLCJkaXNwbGF5IiwianVzdGlmeUNvbnRlbnQiLCJhbGlnbkl0ZW1zIiwiZmxleERpcmVjdGlvbiIsIm9wZW4iLCJvbkNsb3NlIiwiYW5jaG9yT3JpZ2luIiwidmVydGljYWwiLCJob3Jpem9udGFsIiwic3giLCJwIiwibGFiZWwiLCJ2YXJpYW50IiwidmFsdWUiLCJvbkNoYW5nZSIsInRhcmdldCIsImFsaWduIiwiYmdjb2xvciIsInBhZGRpbmciLCJib3JkZXJUb3AiLCJib3JkZXJMZWZ0Iiwib3JpZW50YXRpb24iLCJhcmlhLWxhYmVsIiwiYnV0dG9uIiwiaW5kZXgiLCJmbGV4IiwibWF4SGVpZ2h0Iiwib3ZlcmZsb3ciLCJzcGFjaW5nIiwicG9zaXRpb24iLCJ6SW5kZXgiLCJ0b3AiLCJsZWZ0IiwibWFyZ2luLXRvcCIsIm1hcmdpbkxlZnQiLCJpIiwibWluSGVpZ2h0IiwiYm9yZGVyUmFkaXVzIiwiY3Vyc29yIiwicmVmIiwiZWwiLCJjaGFyQXQiLCJ0b1VwcGVyQ2FzZSIsInNsaWNlIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(ssr)/./src/app/page.js\n");
+
+/***/ }),
+
+/***/ "(rsc)/./src/app/globals.css":
+/*!*****************************!*\
+  !*** ./src/app/globals.css ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (\"d719f1faaec3\");\nif (false) {}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvYXBwL2dsb2JhbHMuY3NzIiwibWFwcGluZ3MiOiI7Ozs7QUFBQSxpRUFBZSxjQUFjO0FBQzdCLElBQUksS0FBVSxFQUFFLEVBQXVCIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vaW52ZW50b3J5LW1hbmFnZW1lbnQtYXBwLy4vc3JjL2FwcC9nbG9iYWxzLmNzcz8xYWQ3Il0sInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBkZWZhdWx0IFwiZDcxOWYxZmFhZWMzXCJcbmlmIChtb2R1bGUuaG90KSB7IG1vZHVsZS5ob3QuYWNjZXB0KCkgfVxuIl0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./src/app/globals.css\n");
+
+/***/ }),
+
+/***/ "(rsc)/./src/app/layout.js":
+/*!***************************!*\
+  !*** ./src/app/layout.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ RootLayout),\n/* harmony export */   metadata: () => (/* binding */ metadata)\n/* harmony export */ });\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ \"(rsc)/./node_modules/next/dist/server/future/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js\");\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var next_font_google_target_css_path_src_app_layout_js_import_Inter_arguments_subsets_latin_variableName_inter___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/font/google/target.css?{\"path\":\"src\\\\app\\\\layout.js\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"} */ \"(rsc)/./node_modules/next/font/google/target.css?{\\\"path\\\":\\\"src\\\\\\\\app\\\\\\\\layout.js\\\",\\\"import\\\":\\\"Inter\\\",\\\"arguments\\\":[{\\\"subsets\\\":[\\\"latin\\\"]}],\\\"variableName\\\":\\\"inter\\\"}\");\n/* harmony import */ var next_font_google_target_css_path_src_app_layout_js_import_Inter_arguments_subsets_latin_variableName_inter___WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_font_google_target_css_path_src_app_layout_js_import_Inter_arguments_subsets_latin_variableName_inter___WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _globals_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./globals.css */ \"(rsc)/./src/app/globals.css\");\n\n\n\nconst metadata = {\n    title: \"Create Next App\",\n    description: \"Generated by create next app\"\n};\nfunction RootLayout({ children }) {\n    return /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"html\", {\n        lang: \"en\",\n        children: /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"body\", {\n            className: (next_font_google_target_css_path_src_app_layout_js_import_Inter_arguments_subsets_latin_variableName_inter___WEBPACK_IMPORTED_MODULE_2___default().className),\n            children: children\n        }, void 0, false, {\n            fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\layout.js\",\n            lineNumber: 20,\n            columnNumber: 7\n        }, this)\n    }, void 0, false, {\n        fileName: \"C:\\\\Users\\\\prvpa\\\\inventory-management-app\\\\src\\\\app\\\\layout.js\",\n        lineNumber: 19,\n        columnNumber: 5\n    }, this);\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvYXBwL2xheW91dC5qcyIsIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7OztBQU9NQTtBQUhpQjtBQUtoQixNQUFNQyxXQUFXO0lBQ3RCQyxPQUFPO0lBQ1BDLGFBQWE7QUFDZixFQUFFO0FBRWEsU0FBU0MsV0FBVyxFQUFFQyxRQUFRLEVBQUU7SUFDN0MscUJBR0UsOERBQUNDO1FBQUtDLE1BQUs7a0JBQ1QsNEVBQUNDO1lBQUtDLFdBQVdULDhKQUFlO3NCQUFHSzs7Ozs7Ozs7Ozs7QUFJekMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9pbnZlbnRvcnktbWFuYWdlbWVudC1hcHAvLi9zcmMvYXBwL2xheW91dC5qcz81YjE5Il0sInNvdXJjZXNDb250ZW50IjpbIlxuaW1wb3J0IHsgSW50ZXIgfSBmcm9tIFwibmV4dC9mb250L2dvb2dsZVwiO1xuXG5cbmltcG9ydCBcIi4vZ2xvYmFscy5jc3NcIjtcblxuXG5jb25zdCBpbnRlciA9IEludGVyKHsgc3Vic2V0czogW1wibGF0aW5cIl0gfSk7XG5cbmV4cG9ydCBjb25zdCBtZXRhZGF0YSA9IHtcbiAgdGl0bGU6IFwiQ3JlYXRlIE5leHQgQXBwXCIsXG4gIGRlc2NyaXB0aW9uOiBcIkdlbmVyYXRlZCBieSBjcmVhdGUgbmV4dCBhcHBcIixcbn07XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIFJvb3RMYXlvdXQoeyBjaGlsZHJlbiB9KSB7XG4gIHJldHVybiAoXG4gICAgXG4gICAgXG4gICAgPGh0bWwgbGFuZz1cImVuXCI+XG4gICAgICA8Ym9keSBjbGFzc05hbWU9e2ludGVyLmNsYXNzTmFtZX0+e2NoaWxkcmVufTwvYm9keT5cbiAgICA8L2h0bWw+XG4gICAgXG4gICk7XG59XG4iXSwibmFtZXMiOlsiaW50ZXIiLCJtZXRhZGF0YSIsInRpdGxlIiwiZGVzY3JpcHRpb24iLCJSb290TGF5b3V0IiwiY2hpbGRyZW4iLCJodG1sIiwibGFuZyIsImJvZHkiLCJjbGFzc05hbWUiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./src/app/layout.js\n");
+
+/***/ }),
+
+/***/ "(rsc)/./src/app/page.js":
+/*!*************************!*\
+  !*** ./src/app/page.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   $$typeof: () => (/* binding */ $$typeof),
+/* harmony export */   __esModule: () => (/* binding */ __esModule),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/build/webpack/loaders/next-flight-loader/module-proxy */ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js");
+
+const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\prvpa\inventory-management-app\src\app\page.js`)
+
+// Accessing the __esModule property and exporting $$typeof are required here.
+// The __esModule getter forces the proxy target to create the default export
+// and the $$typeof value is for rendering logic to determine if the module
+// is a client boundary.
+const { __esModule, $$typeof } = proxy;
+const __default__ = proxy.default;
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\prvpa\inventory-management-app\src\app\page.js#default`));
+
+
+/***/ }),
+
+/***/ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-metadata-image-loader.js?type=favicon&segment=&basePath=&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!./src/app/favicon.ico?__next_metadata__":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-metadata-image-loader.js?type=favicon&segment=&basePath=&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!./src/app/favicon.ico?__next_metadata__ ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var next_dist_lib_metadata_get_metadata_route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/lib/metadata/get-metadata-route */ \"(rsc)/./node_modules/next/dist/lib/metadata/get-metadata-route.js\");\n/* harmony import */ var next_dist_lib_metadata_get_metadata_route__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_dist_lib_metadata_get_metadata_route__WEBPACK_IMPORTED_MODULE_0__);\n  \n\n  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((props) => {\n    const imageData = {\"type\":\"image/x-icon\",\"sizes\":\"16x16\"}\n    const imageUrl = (0,next_dist_lib_metadata_get_metadata_route__WEBPACK_IMPORTED_MODULE_0__.fillMetadataSegment)(\".\", props.params, \"favicon.ico\")\n\n    return [{\n      ...imageData,\n      url: imageUrl + \"\",\n    }]\n  });//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9ub2RlX21vZHVsZXMvbmV4dC9kaXN0L2J1aWxkL3dlYnBhY2svbG9hZGVycy9uZXh0LW1ldGFkYXRhLWltYWdlLWxvYWRlci5qcz90eXBlPWZhdmljb24mc2VnbWVudD0mYmFzZVBhdGg9JnBhZ2VFeHRlbnNpb25zPXRzeCZwYWdlRXh0ZW5zaW9ucz10cyZwYWdlRXh0ZW5zaW9ucz1qc3gmcGFnZUV4dGVuc2lvbnM9anMhLi9zcmMvYXBwL2Zhdmljb24uaWNvP19fbmV4dF9tZXRhZGF0YV9fIiwibWFwcGluZ3MiOiI7Ozs7OztBQUFBLEVBQWlGOztBQUVqRixFQUFFLGlFQUFlO0FBQ2pCLHVCQUF1QjtBQUN2QixxQkFBcUIsOEZBQW1COztBQUV4QztBQUNBO0FBQ0E7QUFDQSxLQUFLO0FBQ0wiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9pbnZlbnRvcnktbWFuYWdlbWVudC1hcHAvLi9zcmMvYXBwL2Zhdmljb24uaWNvPzY1MmMiXSwic291cmNlc0NvbnRlbnQiOlsiICBpbXBvcnQgeyBmaWxsTWV0YWRhdGFTZWdtZW50IH0gZnJvbSAnbmV4dC9kaXN0L2xpYi9tZXRhZGF0YS9nZXQtbWV0YWRhdGEtcm91dGUnXG5cbiAgZXhwb3J0IGRlZmF1bHQgKHByb3BzKSA9PiB7XG4gICAgY29uc3QgaW1hZ2VEYXRhID0ge1widHlwZVwiOlwiaW1hZ2UveC1pY29uXCIsXCJzaXplc1wiOlwiMTZ4MTZcIn1cbiAgICBjb25zdCBpbWFnZVVybCA9IGZpbGxNZXRhZGF0YVNlZ21lbnQoXCIuXCIsIHByb3BzLnBhcmFtcywgXCJmYXZpY29uLmljb1wiKVxuXG4gICAgcmV0dXJuIFt7XG4gICAgICAuLi5pbWFnZURhdGEsXG4gICAgICB1cmw6IGltYWdlVXJsICsgXCJcIixcbiAgICB9XVxuICB9Il0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-metadata-image-loader.js?type=favicon&segment=&basePath=&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!./src/app/favicon.ico?__next_metadata__\n");
+
+/***/ })
+
+};
+;
+
+// load runtime
+var __webpack_require__ = require("../webpack-runtime.js");
+__webpack_require__.C(exports);
+var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/@mui","vendor-chunks/@grpc","vendor-chunks/protobufjs","vendor-chunks/@emotion","vendor-chunks/@protobufjs","vendor-chunks/@babel","vendor-chunks/stylis","vendor-chunks/react-transition-group","vendor-chunks/@swc","vendor-chunks/@firebase","vendor-chunks/prop-types","vendor-chunks/idb","vendor-chunks/firebase","vendor-chunks/react-is","vendor-chunks/clsx","vendor-chunks/object-assign","vendor-chunks/long","vendor-chunks/lodash.camelcase","vendor-chunks/hoist-non-react-statics"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fpage&page=%2Fpage&appPaths=%2Fpage&pagePath=private-next-app-dir%2Fpage.js&appDir=C%3A%5CUsers%5Cprvpa%5Cinventory-management-app%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5Cprvpa%5Cinventory-management-app&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
+module.exports = __webpack_exports__;
+
+})();
